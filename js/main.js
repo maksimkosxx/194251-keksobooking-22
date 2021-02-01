@@ -20,7 +20,9 @@ const getRandomInteger = (min, max) => {
 
 }
 
-const getRandomFractional = (min, max) => {
+const getRandomFractional = (min, max, signs) => {
+
+  const result = (Math.random() * (max - min + 1) + min);
 
   if(min >= max){
     alert('Значание min должно быть меньше max')
@@ -34,10 +36,10 @@ const getRandomFractional = (min, max) => {
     alert('Значание max должно быть больше либо равно 0')
     return undefined;
 
-  } else return Math.random() * (max - min + 1) + min;
+  } else return result.toFixed(signs);
 
 }
 // eslint-disable-next-line no-console
 console.log(getRandomInteger(0, 5));
 // eslint-disable-next-line no-console
-console.log(getRandomFractional(1.5, 5.5));
+console.log(getRandomFractional(1.5, 5.5, 3));
