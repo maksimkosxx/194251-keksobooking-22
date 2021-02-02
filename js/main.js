@@ -20,6 +20,7 @@ const getRandomInteger = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 }
+getRandomInteger(1, 10);
 
 const getRandomFractional = (min, max, signs) => {
 
@@ -41,3 +42,4 @@ const getRandomFractional = (min, max, signs) => {
     return result.toFixed(signs);
   }
 }
+getRandomFractional(1, 10, 2);
