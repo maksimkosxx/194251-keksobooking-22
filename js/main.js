@@ -101,5 +101,5 @@ const createBookingCollection = (length) => {
   return bookingCollection;
 }
 
-
+createBookingCollection(10);
 
