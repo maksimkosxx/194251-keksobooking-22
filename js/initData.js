@@ -10,12 +10,12 @@ const TIME = [
   '14:00',
 ]
 const FEATURES = [
+  'conditioner',
   'wifi',
   'dishwasher',
   'parking',
   'washer',
   'elevator',
-  'conditioner',
 ]
 const PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
