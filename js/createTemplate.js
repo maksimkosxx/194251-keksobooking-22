@@ -1,6 +1,6 @@
 
 
-const createTemplate = (data, length) => {
+const createTemplate = data => {
 
   let templatesCollection = [];
 
