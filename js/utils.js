@@ -23,7 +23,7 @@ const createObject = () => {
       guests: getRandomInteger(1, 100),
       checkin: DATA.TIME[getArrayIndex(DATA.TIME)],
       checkout: DATA.TIME[getArrayIndex(DATA.TIME)],
-      features: DATA.FEATURES.slice(0, getArrayIndex(DATA.FEATURES)),
+      features: DATA.FEATURES.slice(0, getRandomInteger(0, DATA.FEATURES.length)),
       description: 'Информация об объекте',
       photos: DATA.PHOTOS[getArrayIndex(DATA.PHOTOS)],
     },
