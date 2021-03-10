@@ -2,8 +2,6 @@
 
 const createTemplate = data => {
 
-  let templatesCollection = [];
-
   const initTemplate = document.querySelector('#card').content;
   const templateItem = initTemplate.querySelector('.popup');
   const newItem = templateItem.cloneNode(true);
@@ -47,29 +45,22 @@ const createTemplate = data => {
     });
   }
 
-  data.map(item => {
-    item.map(sub_item => {
+  const { offer } = data;
+  const { avatar } = data.author;
 
-      const dataOffer = sub_item.offer;
-      const dataAvatar = sub_item.author.avatar;
+  createElement(TITLE, offer.title);
+  createElement(ADDRESS, offer.address);
+  createElement(PRICE, `${offer.price} ₽/ночь`);
+  createElement(TYPE, getType(offer.type));
+  createElement(CAPACITY, `${offer.rooms} комнаты для ${offer.guests} гостей`);
+  createElement(TIME, `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`);
+  getFeatures(FEATURES, offer.features);
+  createElement(DESCRIPTION, offer.description);
+  PHOTO.src = offer.photos;
+  PHOTO.alt = offer.title;
+  AVATAR.src = avatar;
 
-      createElement(TITLE, dataOffer.title);
-      createElement(ADDRESS, dataOffer.address);
-      createElement(PRICE, `${dataOffer.price} ₽/ночь`);
-      createElement(TYPE, getType(dataOffer.type));
-      createElement(CAPACITY, `${dataOffer.rooms} комнаты для ${dataOffer.guests} гостей`);
-      createElement(TIME, `Заезд после ${dataOffer.checkin}, выезд до ${dataOffer.checkout}`);
-      getFeatures(FEATURES, dataOffer.features);
-      createElement(DESCRIPTION, dataOffer.description);
-      PHOTO.src = dataOffer.photos;
-      PHOTO.alt = dataOffer.title;
-      AVATAR.src = dataAvatar;
-
-      templatesCollection.push(newItem)
-    })
-  })
-
-  return templatesCollection;
+  return newItem;
 }
 
 export default createTemplate;
