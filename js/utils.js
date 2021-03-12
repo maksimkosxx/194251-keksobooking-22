@@ -3,14 +3,12 @@ import { getRandomInteger, getRandomFractional, getArrayIndex } from './helpers.
 
 const createObject = () => {
 
-  let arr = [];
-
   const locationObj = {
     x: getRandomFractional(35.65, 35.70, 5),
     y: getRandomFractional(139.70, 139.80, 5),
   }
 
-  const ads = {
+  return {
     author: {
       avatar: 'img/avatars/user0' + getRandomInteger(1, 8) + '.png',
     },
@@ -33,8 +31,5 @@ const createObject = () => {
     },
   };
 
-  arr.push(ads);
-
-  return arr;
 }
 export default createObject;
