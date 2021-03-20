@@ -1,32 +1,34 @@
+import {initCoords, fieldAddress, pageBody} from './utils.js';
 
-const getRandomNumber = (min, max) => {
-  const usedIndexes = new Set();
-  const newNumber = Math.floor(Math.random() * (max - min + 1) + min);
-  if (usedIndexes.has(newNumber)) {
-    return this.getRandomNumber(min, max);
+
+const setAddressValue = () => {
+  setTimeout(()=> {
+    fieldAddress.value = `${initCoords.lat}, ${initCoords.lng}`;
+  }, 200)
+};
+
+const createRespondingMessage = (selector) => {
+  const messageId = `#${selector}`;
+  const messageClass = `.${selector}`;
+  const messageBtnClass = `${messageClass}__button`;
+  const initTemplate = document.querySelector(messageId).content.cloneNode(true);
+  const newMessage = initTemplate.querySelector(messageClass);
+  const messageBtn = initTemplate.querySelector(messageBtnClass);
+  pageBody.appendChild(newMessage);
+
+  pageBody.addEventListener('keydown', (evt) => {
+    if(evt.key === 'Escape' || evt.key === 'Esc') {
+      newMessage.remove();
+    }
+  });
+  if(messageBtn) {
+    messageBtn.addEventListener('click', () => {
+      newMessage.remove();
+    });
   } else {
-    usedIndexes.add(newNumber);
-    return newNumber;
+    pageBody.addEventListener('click', () => {
+      newMessage.remove();
+    });
   }
 }
-
-const getRandomInteger = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-
-  if (min >= 0 && min !== max) {
-    return getRandomNumber(min, max);
-  }
-}
-
-const getRandomFractional = (min, max, signs) => {
-  const result = Math.random() * (max - min) + min;
-  if (min >= 0 && min !== max) {
-    return result.toFixed(signs);
-  }
-}
-
-const getArrayIndex = array => getRandomInteger(0, array.length - 1);
-
-
-export { getRandomInteger, getRandomFractional, getArrayIndex }
+export {createRespondingMessage, setAddressValue}

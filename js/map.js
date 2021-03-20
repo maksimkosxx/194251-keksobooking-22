@@ -1,10 +1,7 @@
 /* global L:readonly */
+import { initCoords, mainForm, fieldAddress, mapFilters } from './utils.js';
+import {setAddressValue} from './helpers.js';
 import createTemplate from './createTemplate.js';
-
-const initCoords = {
-  lat: 35.68697,
-  lng: 139.75394,
-}
 
 const addDisabledValue = (array, value) => {
   for (let i = 0; i < array.length; i++) {
@@ -12,33 +9,40 @@ const addDisabledValue = (array, value) => {
   }
 }
 
-const mainForm = document.querySelector('.ad-form');
 mainForm.classList.add('ad-form--disabled');
 
 const allFieldset = mainForm.querySelectorAll('fieldset');
 addDisabledValue(allFieldset, true);
 
-const mapFilters = document.querySelector('.map__filters');
 mapFilters.classList.add('map__filters--disabled');
+
+const mapFeatures = document.querySelector('.map__features');
+mapFeatures.classList.add('map__features--disabled');
 
 const allSelect = document.querySelectorAll('.map__filter');
 addDisabledValue(allSelect, true);
 
+
 const Map = (data) => {
+
+  const checkData = data !== undefined;
 
   const map = L.map('map-canvas').on('load', () => {
 
     mainForm.classList.remove('ad-form--disabled');
     mapFilters.classList.remove('map__filters--disabled');
+    if(checkData) {
+      mapFeatures.classList.remove('map__features--disabled');
+    }
     addDisabledValue(allFieldset, false);
-    addDisabledValue(allSelect, false);
+    addDisabledValue(allSelect, !checkData);
 
   });
 
   map.setView({
     lat: initCoords.lat,
     lng: initCoords.lng,
-  }, 13);
+  }, 10);
 
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -54,18 +58,17 @@ const Map = (data) => {
   })
   const mainPinMarker = L.marker(
     {
-      lat: 35.687023,
-      lng: 139.757369,
+      lat: initCoords.lat,
+      lng: initCoords.lng,
     },
     {
       draggable: true,
       icon: mainPinIcon,
     },
   );
+
   mainPinMarker.addTo(map);
 
-
-  const fieldAddress = mainForm.querySelector('#address');
   fieldAddress.readOnly = true;
   fieldAddress.value = `${initCoords.lat}, ${initCoords.lng}`;
 
@@ -74,9 +77,17 @@ const Map = (data) => {
     fieldAddress.value = `${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`;
   });
 
-  data.map(item => {
+  const btnReset = document.querySelector('.ad-form__reset');
 
-    const {x: lat, y: lng} = item.location;
+  btnReset.addEventListener('click', ()=> {
+    mainForm.reset();
+    setAddressValue();
+    mainPinMarker.setLatLng(initCoords);
+  })
+
+  data && data.map(item => {
+
+    const {lat, lng} = item.location;
 
     const popup = createTemplate(item);
 
