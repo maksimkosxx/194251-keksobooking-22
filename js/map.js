@@ -81,6 +81,7 @@ const Map = (data) => {
 
   btnReset.addEventListener('click', ()=> {
     mainForm.reset();
+    mapFilters.reset();
     setAddressValue();
     mainPinMarker.setLatLng(initCoords);
   })

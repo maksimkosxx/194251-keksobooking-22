@@ -1,5 +1,5 @@
-import { mainForm } from './utils.js';
-import { createRespondingMessage, setAddressValue } from './helpers.js';
+import {mainForm, mapFilters} from './utils.js';
+import { createRespondingMessage as respondingMessage, setAddressValue } from './helpers.js';
 
 
 mainForm.addEventListener('submit', (evt) => {
@@ -16,10 +16,11 @@ mainForm.addEventListener('submit', (evt) => {
     .then((response) => {
       if(response.ok) {
         mainForm.reset();
+        mapFilters.reset();
         setAddressValue();
-        createRespondingMessage('success');
+        respondingMessage('success');
       } else {
-        createRespondingMessage('error');
+        respondingMessage('error');
       }
     })
     .catch((err) => alert(err))
