@@ -1,5 +1,10 @@
 import {initCoords, fieldAddress, pageBody} from './utils.js';
 
+const addDisabledValue = (array, value) => {
+  for (let i = 0; i < array.length; i++) {
+    array[i].disabled = value;
+  }
+}
 
 const setAddressValue = () => {
   setTimeout(()=> {
@@ -31,4 +36,4 @@ const createRespondingMessage = (selector) => {
     });
   }
 }
-export {createRespondingMessage, setAddressValue}
+export {addDisabledValue, setAddressValue, createRespondingMessage}

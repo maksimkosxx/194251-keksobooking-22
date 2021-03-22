@@ -1,6 +1,8 @@
-import {mainForm, mapFilters} from './utils.js';
+import {initCoords, mainForm, mainPinMarker, mapFilterForm} from './utils.js';
 import { createRespondingMessage as respondingMessage, setAddressValue } from './helpers.js';
 
+
+const btnReset = document.querySelector('.ad-form__reset');
 
 mainForm.addEventListener('submit', (evt) => {
 
@@ -16,7 +18,7 @@ mainForm.addEventListener('submit', (evt) => {
     .then((response) => {
       if(response.ok) {
         mainForm.reset();
-        mapFilters.reset();
+        mapFilterForm.reset();
         setAddressValue();
         respondingMessage('success');
       } else {
@@ -25,3 +27,12 @@ mainForm.addEventListener('submit', (evt) => {
     })
     .catch((err) => alert(err))
 })
+
+
+btnReset.addEventListener('click', ()=> {
+  mainForm.reset();
+  mapFilterForm.reset();
+  setAddressValue();
+  mainPinMarker.setLatLng(initCoords);
+})
+

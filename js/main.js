@@ -1,6 +1,8 @@
-import Map from './map.js';
-import errorMessage from './error.js';
+import errorResponse from './error.js';
 import './useForm.js';
+import { changeFilters } from './changeFilters.js'
+import renderMarkers from './map.js';
+
 
 
 fetch('https://22.javascript.pages.academy/keksobooking/data')
@@ -10,9 +12,11 @@ fetch('https://22.javascript.pages.academy/keksobooking/data')
     }
     throw new Error(`${response.status} ${response.statusText}`);
   })
-  .then(json => Map(json))
+  .then(json => {
+    renderMarkers(json);
+    changeFilters(() => renderMarkers(json))
+  })
   .catch(err => {
-    errorMessage(err);
-    Map();
+    errorResponse(err);
   })
 
