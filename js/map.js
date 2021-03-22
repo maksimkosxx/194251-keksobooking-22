@@ -28,8 +28,6 @@ mainPinMarker.on('moveend', (evt) => {
 });
 const renderMarkers = (data) => {
 
-  console.log(Filters(data))
-
   const POINTS_LIMIT = 10;
 
   const resultData = Filters(data).slice(0, POINTS_LIMIT);
