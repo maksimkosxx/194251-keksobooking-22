@@ -123,6 +123,11 @@ fieldset {
 
 .map__filters--disabled {
   opacity: 0.5;
+  pointer-events: none;
+}
+.map__features--disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .map__filter {
@@ -926,7 +931,7 @@ fieldset {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 1000;
 
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -1025,4 +1030,64 @@ fieldset {
 
 .hidden {
   display: none;
+}
+
+/**
+ * Сообщения о неуспешной загрузке данных с сервера
+ */
+
+.message__layout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 500;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+}
+.message__popup {
+  position: absolute;
+  z-index: 501;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 500px;
+  height: 300px;
+  margin: auto;
+  padding: 40px 30px;
+  border-radius: 4px;
+  text-align: center;
+  background-color: #ffffff;
+}
+@media (max-width: 768px) {
+  .message__popup {
+    width: 300px;
+    height: 200px;
+  }
+}
+.message__close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-size: 50px;
+  color: #000;
+  cursor: pointer;
+  outline: none;
+  background-color: transparent;
+}
+.message__close:hover {
+  color: rgba(0,0,0,0.5);
+}
+.message__title {
+  font-size: 20px;
+  color: red;
+}
+.message__description {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #000;
 }

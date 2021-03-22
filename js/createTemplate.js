@@ -1,5 +1,4 @@
 
-
 const createTemplate = data => {
 
   const initTemplate = document.querySelector('#card').content;
@@ -18,7 +17,7 @@ const createTemplate = data => {
   const AVATAR = newItem.querySelector('.popup__avatar');
 
   const createElement = (element, content) => {
-    if(element.textContent.length > 0) {
+    if (element.textContent.length > 0) {
       return element.textContent = content
     } else
       return element.remove();
@@ -36,17 +35,35 @@ const createTemplate = data => {
         return 'Дворец';
     }
   }
-  const getFeatures = (template, array) => {
+  const createFeaturesList = (template, array) => {
     template.innerHTML = ''
-    array.map(el => {
-      const listItem = document.createElement('li');
-      listItem.classList.add('popup__feature', `popup__feature--${el}`);
-      template.appendChild(listItem);
-    });
+    if (array.length > 0) {
+      array.map(el => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('popup__feature', `popup__feature--${el}`);
+        template.appendChild(listItem);
+      });
+    } else {
+      template.remove()
+    }
   }
 
-  const { offer } = data;
-  const { avatar } = data.author;
+  const createPhotosList = (list, array, alt) => {
+    list.innerHTML = ''
+    if (array.length > 0) {
+      array.map(link => {
+        const listItem = PHOTO.cloneNode(true);
+        listItem.src = link;
+        listItem.alt = alt;
+        list.appendChild(listItem);
+      })
+    } else {
+      return list.remove()
+    }
+  }
+
+  const {offer} = data;
+  const {avatar} = data.author;
 
   createElement(TITLE, offer.title);
   createElement(ADDRESS, offer.address);
@@ -54,10 +71,9 @@ const createTemplate = data => {
   createElement(TYPE, getType(offer.type));
   createElement(CAPACITY, `${offer.rooms} комнаты для ${offer.guests} гостей`);
   createElement(TIME, `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`);
-  getFeatures(FEATURES, offer.features);
+  createFeaturesList(FEATURES, offer.features);
   createElement(DESCRIPTION, offer.description);
-  PHOTO.src = offer.photos;
-  PHOTO.alt = offer.title;
+  createPhotosList(PHOTOS, offer.photos, offer.title);
   AVATAR.src = avatar;
 
   return newItem;

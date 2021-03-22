@@ -1,8 +1,18 @@
-import createObject from './utils.js';
-import createData from './createData.js';
 import Map from './map.js';
+import errorMessage from './error.js';
+import './useForm.js';
 
-const data = createData(createObject, 10);
 
-Map(data);
+fetch('https://22.javascript.pages.academy/keksobooking/data')
+  .then((response) => {
+    if(response.ok ) {
+      return response.json()
+    }
+    throw new Error(`${response.status} ${response.statusText}`);
+  })
+  .then(json => Map(json))
+  .catch(err => {
+    errorMessage(err);
+    Map();
+  })
 
