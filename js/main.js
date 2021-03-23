@@ -1,8 +1,7 @@
 import errorResponse from './error.js';
 import './useForm.js';
-import { changeFilters } from './changeFilters.js'
+import changeFilters from './changeFilters.js'
 import renderMarkers from './map.js';
-
 
 
 fetch('https://22.javascript.pages.academy/keksobooking/data')
@@ -19,4 +18,3 @@ fetch('https://22.javascript.pages.academy/keksobooking/data')
   .catch(err => {
     errorResponse(err);
   })
-

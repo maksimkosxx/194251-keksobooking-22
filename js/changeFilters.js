@@ -8,4 +8,4 @@ const changeFilters = (cb) => {
   mapFilterForm.addEventListener('change', (_.debounce(() => cb(), RERENDER_DELAY)))
 }
 
-export { changeFilters };
+export default changeFilters;
