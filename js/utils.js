@@ -34,6 +34,17 @@ const allMapFilters = mapFilterForm.querySelectorAll('.map__filter');
 const allFieldset = mainForm.querySelectorAll('fieldset');
 const fieldAddress = mainForm.querySelector('#address');
 
+const typeFormInput = mainForm.querySelector('#type');
+const priceInput = mainForm.querySelector('#price');
+const timeinSelect = mainForm.querySelector('#timein');
+const timeoutSelect = mainForm.querySelector('#timeout');
+
+const typeSelect = mapFilterForm.querySelector('#housing-type');
+const priceSelect = mapFilterForm.querySelector('#housing-price');
+const roomsSelect = mapFilterForm.querySelector('#housing-rooms');
+const guestsSelect = mapFilterForm.querySelector('#housing-guests');
+const featuresFieldset = mapFilterForm.querySelector('#housing-features');
+
 
 export {
   pageBody,
@@ -46,5 +57,14 @@ export {
   allMapFilters,
   allFieldset,
   mapFeatures,
-  fieldAddress
+  fieldAddress,
+  typeFormInput,
+  priceInput,
+  timeinSelect,
+  timeoutSelect,
+  typeSelect,
+  priceSelect,
+  roomsSelect,
+  guestsSelect,
+  featuresFieldset
 }
