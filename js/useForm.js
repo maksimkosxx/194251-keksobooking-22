@@ -1,4 +1,4 @@
-import {initCoords, mainForm, mainPinMarker, mapFilterForm} from './utils.js';
+import {initCoords, mainForm, mainPinMarker, mapPoints, mapFilterForm} from './utils.js';
 import { createRespondingMessage as respondingMessage, setAddressValue } from './helpers.js';
 
 
@@ -32,6 +32,7 @@ mainForm.addEventListener('submit', (evt) => {
 btnReset.addEventListener('click', ()=> {
   mainForm.reset();
   mapFilterForm.reset();
+  mapPoints.clearLayers();
   setAddressValue();
   mainPinMarker.setLatLng(initCoords);
 })

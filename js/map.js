@@ -1,5 +1,5 @@
 /* global L:readonly */
-import { initCoords, initMap, mainPinMarker, fieldAddress } from './utils.js';
+import { initCoords, initMap, mainPinMarker, mapPoints, fieldAddress } from './utils.js';
 import createTemplate from './createTemplate.js';
 import Filters from './filters.js';
 
@@ -26,13 +26,17 @@ mainPinMarker.on('moveend', (evt) => {
   const coords = evt.target.getLatLng();
   fieldAddress.value = `${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`;
 });
+
+
 const renderMarkers = (data) => {
 
   const POINTS_LIMIT = 10;
 
+  mapPoints.clearLayers();
+
   const resultData = Filters(data).slice(0, POINTS_LIMIT);
 
-  data && resultData.map(item => {
+  resultData.map(item => {
 
     const {lat, lng} = item.location;
 
@@ -47,12 +51,13 @@ const renderMarkers = (data) => {
     const marker = L.marker({lat, lng}, {icon});
 
     marker
-      .addTo(initMap)
+      .addTo(mapPoints)
       .bindPopup(popup,
         {
           keepInView: true,
         },
       );
+
   });
 
 }

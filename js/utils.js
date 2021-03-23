@@ -8,11 +8,13 @@ const initCoords = {
 }
 
 const initMap = L.map('map-canvas');
+
 const mainPinIcon = L.icon({
   iconUrl: '../img/main-pin.svg',
   iconSize: [52, 52],
   iconAnchor: [26, 52],
 })
+
 const mainPinMarker = L.marker(
   {
     lat: initCoords.lat,
@@ -23,6 +25,8 @@ const mainPinMarker = L.marker(
     icon: mainPinIcon,
   },
 );
+const mapPoints = L.layerGroup().addTo(initMap);
+
 const mainForm = document.querySelector('.ad-form');
 const mapFilterForm = document.querySelector('.map__filters');
 const mapFeatures = document.querySelector('.map__features');
@@ -36,6 +40,7 @@ export {
   initCoords,
   initMap,
   mainPinMarker,
+  mapPoints,
   mainForm,
   mapFilterForm,
   allMapFilters,

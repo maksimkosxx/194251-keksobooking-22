@@ -57,7 +57,6 @@ const Filters = (data) => {
     .filter(filtrationRooms)
     .filter(filtrationGuests)
     .filter(filtrationFeatures);
-
 }
 
 export default Filters;
