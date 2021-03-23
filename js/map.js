@@ -16,7 +16,6 @@ L.tileLayer(
   },
 ).addTo(initMap);
 
-
 mainPinMarker.addTo(initMap);
 
 fieldAddress.readOnly = true;

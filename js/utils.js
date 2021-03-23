@@ -27,6 +27,7 @@ const mainPinMarker = L.marker(
 );
 const mapPoints = L.layerGroup().addTo(initMap);
 
+
 const mainForm = document.querySelector('.ad-form');
 const mapFilterForm = document.querySelector('.map__filters');
 const mapFeatures = document.querySelector('.map__features');
