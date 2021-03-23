@@ -1,40 +1,74 @@
-import * as DATA from './initData.js';
-import { getRandomInteger, getRandomFractional, getArrayIndex } from './helpers.js'
+/* global L:readonly */
 
-const createObject = () => {
+const pageBody = document.querySelector('body');
 
-  let arr = [];
-
-  const locationObj = {
-    x: getRandomFractional(35.65, 35.70, 5),
-    y: getRandomFractional(139.70, 139.80, 5),
-  }
-
-  const ads = {
-    author: {
-      avatar: 'img/avatars/user0' + getRandomInteger(1, 8) + '.png',
-    },
-    offer: {
-      title: 'Информация об объекте',
-      address: `${locationObj.x}` + ',' + `${locationObj.y}`,
-      price: getRandomInteger(1, 10000),
-      type: DATA.PLACE[getArrayIndex(DATA.PLACE)],
-      rooms: getRandomInteger(1, 100),
-      guests: getRandomInteger(1, 100),
-      checkin: DATA.TIME[getArrayIndex(DATA.TIME)],
-      checkout: DATA.TIME[getArrayIndex(DATA.TIME)],
-      features: DATA.FEATURES.slice(0, getRandomInteger(0, DATA.FEATURES.length)),
-      description: 'Информация об объекте',
-      photos: DATA.PHOTOS[getArrayIndex(DATA.PHOTOS)],
-    },
-    location: {
-      x: locationObj.x,
-      y: locationObj.y,
-    },
-  };
-
-  arr.push(ads);
-
-  return arr;
+const initCoords = {
+  lat: 35.68697,
+  lng: 139.75394,
 }
-export default createObject;
+
+const initMap = L.map('map-canvas');
+
+const mainPinIcon = L.icon({
+  iconUrl: '../img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+})
+
+const mainPinMarker = L.marker(
+  {
+    lat: initCoords.lat,
+    lng: initCoords.lng,
+  },
+  {
+    draggable: true,
+    icon: mainPinIcon,
+  },
+);
+const mapPoints = L.layerGroup().addTo(initMap);
+
+const mainForm = document.querySelector('.ad-form');
+const mapFilterForm = document.querySelector('.map__filters');
+const mapFeatures = document.querySelector('.map__features');
+const allMapFilters = mapFilterForm.querySelectorAll('.map__filter');
+const allFieldset = mainForm.querySelectorAll('fieldset');
+const fieldAddress = mainForm.querySelector('#address');
+
+const typeFormInput = mainForm.querySelector('#type');
+const priceInput = mainForm.querySelector('#price');
+const timeinSelect = mainForm.querySelector('#timein');
+const timeoutSelect = mainForm.querySelector('#timeout');
+const roomNumberSelect = mainForm.querySelector('#room_number');
+const capacitySelect = mainForm.querySelector('#capacity');
+
+const typeSelect = mapFilterForm.querySelector('#housing-type');
+const priceSelect = mapFilterForm.querySelector('#housing-price');
+const roomsSelect = mapFilterForm.querySelector('#housing-rooms');
+const guestsSelect = mapFilterForm.querySelector('#housing-guests');
+const featuresFieldset = mapFilterForm.querySelector('#housing-features');
+
+
+export {
+  pageBody,
+  initCoords,
+  initMap,
+  mainPinMarker,
+  mapPoints,
+  mainForm,
+  mapFilterForm,
+  allMapFilters,
+  allFieldset,
+  mapFeatures,
+  fieldAddress,
+  typeFormInput,
+  priceInput,
+  timeinSelect,
+  timeoutSelect,
+  roomNumberSelect,
+  capacitySelect,
+  typeSelect,
+  priceSelect,
+  roomsSelect,
+  guestsSelect,
+  featuresFieldset
+}
