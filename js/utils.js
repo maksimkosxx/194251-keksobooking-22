@@ -38,6 +38,8 @@ const typeFormInput = mainForm.querySelector('#type');
 const priceInput = mainForm.querySelector('#price');
 const timeinSelect = mainForm.querySelector('#timein');
 const timeoutSelect = mainForm.querySelector('#timeout');
+const roomNumberSelect = mainForm.querySelector('#room_number');
+const capacitySelect = mainForm.querySelector('#capacity');
 
 const typeSelect = mapFilterForm.querySelector('#housing-type');
 const priceSelect = mapFilterForm.querySelector('#housing-price');
@@ -62,6 +64,8 @@ export {
   priceInput,
   timeinSelect,
   timeoutSelect,
+  roomNumberSelect,
+  capacitySelect,
   typeSelect,
   priceSelect,
   roomsSelect,

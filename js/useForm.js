@@ -7,28 +7,39 @@ import {
   typeFormInput,
   priceInput,
   timeinSelect,
-  timeoutSelect
+  timeoutSelect,
+  roomNumberSelect,
+  capacitySelect
 } from './utils.js';
-import { createRespondingMessage as respondingMessage, setAddressValue } from './helpers.js';
+import { setAddressValue, getMinPrice, getRoomsValue } from './helpers.js';
 
-const getMinPrice = (type) => {
-  switch (type) {
-    case 'flat':
-      return 1000;
-    case 'bungalow':
-      return 0;
-    case 'house':
-      return 5000;
-    case 'palace':
-      return 10000;
-  }
-}
+
 
 typeFormInput.addEventListener('change' , (evt) => {
-
   const currentValue = evt.target.value;
   priceInput.placeholder = getMinPrice(currentValue).toString();
+})
 
+timeinSelect.addEventListener('change', (evt) => {
+  timeoutSelect.value = evt.target.value;
+})
+timeoutSelect.addEventListener('change', (evt) => {
+  timeinSelect.value = evt.target.value;
+})
+
+
+const allCapacityOptions = capacitySelect.children;
+const optionsArr = [...allCapacityOptions];
+optionsArr.map(option => option.value !== '1' ? option.disabled = true : option.disabled = false);
+
+roomNumberSelect.addEventListener('change', (evt) => {
+
+  const selectedValue = evt.target.value;
+  optionsArr.map(option => option.disabled = true);
+
+  getRoomsValue(selectedValue).map((item) => {
+    capacitySelect.querySelector('option' + '[value="' + item + '"]').disabled = false;
+  })
 })
 
 priceInput.addEventListener('input', (evt) => {
@@ -46,39 +57,6 @@ priceInput.addEventListener('input', (evt) => {
   evt.target.reportValidity();
 });
 
-timeinSelect.addEventListener('change', (evt) => {
-  timeoutSelect.value = evt.target.value;
-
-})
-timeoutSelect.addEventListener('change', (evt) => {
-  timeinSelect.value = evt.target.value;
-})
-
-
-
-mainForm.addEventListener('submit', (evt) => {
-
-  evt.preventDefault();
-
-  const formData = new FormData(evt.target);
-
-  fetch('https://22.javascript.pages.academy/keksobooking',
-    {
-      method: 'POST',
-      body: formData,
-    })
-    .then((response) => {
-      if(response.ok) {
-        mainForm.reset();
-        mapFilterForm.reset();
-        setAddressValue();
-        respondingMessage('success');
-      } else {
-        respondingMessage('error');
-      }
-    })
-    .catch((err) => alert(err))
-})
 
 const btnReset = mainForm.querySelector('.ad-form__reset');
 
