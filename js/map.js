@@ -1,6 +1,6 @@
 /* global L:readonly */
 import { initCoords, initMap, mainPinMarker, mapPoints, fieldAddress } from './utils.js';
-import createTemplate from './createTemplate.js';
+import createTemplate from './create-template.js';
 import Filters from './filters.js';
 
 

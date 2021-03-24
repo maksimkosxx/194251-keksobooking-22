@@ -27,13 +27,25 @@ const mainPinMarker = L.marker(
 );
 const mapPoints = L.layerGroup().addTo(initMap);
 
-
 const mainForm = document.querySelector('.ad-form');
 const mapFilterForm = document.querySelector('.map__filters');
 const mapFeatures = document.querySelector('.map__features');
 const allMapFilters = mapFilterForm.querySelectorAll('.map__filter');
 const allFieldset = mainForm.querySelectorAll('fieldset');
 const fieldAddress = mainForm.querySelector('#address');
+
+const typeFormInput = mainForm.querySelector('#type');
+const priceInput = mainForm.querySelector('#price');
+const timeinSelect = mainForm.querySelector('#timein');
+const timeoutSelect = mainForm.querySelector('#timeout');
+const roomNumberSelect = mainForm.querySelector('#room_number');
+const capacitySelect = mainForm.querySelector('#capacity');
+
+const typeSelect = mapFilterForm.querySelector('#housing-type');
+const priceSelect = mapFilterForm.querySelector('#housing-price');
+const roomsSelect = mapFilterForm.querySelector('#housing-rooms');
+const guestsSelect = mapFilterForm.querySelector('#housing-guests');
+const featuresFieldset = mapFilterForm.querySelector('#housing-features');
 
 
 export {
@@ -47,5 +59,17 @@ export {
   allMapFilters,
   allFieldset,
   mapFeatures,
-  fieldAddress
+  fieldAddress,
+  typeFormInput,
+  priceInput,
+  timeinSelect,
+  timeoutSelect,
+  roomNumberSelect,
+  capacitySelect,
+  typeSelect,
+  priceSelect,
+  roomsSelect,
+  guestsSelect,
+  featuresFieldset
 }
+

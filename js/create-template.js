@@ -1,3 +1,4 @@
+import {getType} from './helpers.js';
 
 const createTemplate = data => {
 
@@ -23,18 +24,6 @@ const createTemplate = data => {
       return element.remove();
   }
 
-  const getType = (type) => {
-    switch (type) {
-      case 'flat':
-        return 'Квартира';
-      case 'bungalow':
-        return 'Бунгало';
-      case 'house':
-        return 'Дом';
-      case 'palace':
-        return 'Дворец';
-    }
-  }
   const createFeaturesList = (template, array) => {
     template.innerHTML = ''
     if (array.length > 0) {
