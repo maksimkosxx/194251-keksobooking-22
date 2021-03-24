@@ -1,6 +1,13 @@
-import {pageBody} from './utils.js';
+import {allFieldset, allMapFilters, mainForm, mapFeatures, mapFilterForm, pageBody} from './utils.js';
+import {addDisabledValue} from './helpers.js';
 
-const errorMessage = err => {
+const errorResponse = err => {
+
+  mainForm.classList.add('ad-form--disabled');
+  addDisabledValue(allFieldset, true);
+  mapFilterForm.classList.add('map__filters--disabled');
+  mapFeatures.classList.add('map__features--disabled');
+  addDisabledValue(allMapFilters, true);
 
   const layout = document.createElement('div');
   layout.classList.add('message__layout')
@@ -46,4 +53,4 @@ const errorMessage = err => {
   pageBody.appendChild(popup);
 
 }
-export default errorMessage;
+export default errorResponse;
