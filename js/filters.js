@@ -4,13 +4,7 @@ import {getPrice} from './helpers.js';
 
 const Filters = (data) => {
 
-  const filtrationItem = (el, item, param) => {
-    if(el.value === 'any') {
-      return true
-    } else {
-      return el.value === item[param].toString()
-    }
-  };
+  const filtrationItem = (el, item, param) => el.value === 'any' ? true : el.value === item[param].toString();
 
   const filtrationType = (item) => filtrationItem(typeSelect, item.offer, 'type');
 
@@ -29,9 +23,7 @@ const Filters = (data) => {
 
     const featuresArr = [...checkedFeaturesItems];
 
-    return featuresArr.every((element) => {
-      return item.offer.features.includes(element.value);
-    });
+    return featuresArr.every(element => item.offer.features.includes(element.value));
   };
 
   return data
