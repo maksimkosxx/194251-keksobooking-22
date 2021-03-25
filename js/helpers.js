@@ -1,6 +1,19 @@
 import {initCoords, fieldAddress, pageBody} from './utils.js';
 
 
+const getType = (type) => {
+  switch (type) {
+    case 'flat':
+      return 'Квартира';
+    case 'bungalow':
+      return 'Бунгало';
+    case 'house':
+      return 'Дом';
+    case 'palace':
+      return 'Дворец';
+  }
+}
+
 const getMinPrice = (type) => {
   switch (type) {
     case 'flat':
@@ -74,4 +87,4 @@ const createRespondingMessage = (selector) => {
     });
   }
 }
-export {addDisabledValue, setAddressValue, createRespondingMessage, getMinPrice, getRoomsValue, getPrice}
+export {addDisabledValue, setAddressValue, createRespondingMessage, getType, getMinPrice, getRoomsValue, getPrice}

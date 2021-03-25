@@ -1046,7 +1046,7 @@ fieldset {
   background: rgba(0,0,0,0.6);
 }
 .message__popup {
-  position: absolute;
+  position: fixed;
   z-index: 501;
   top: 0;
   left: 0;

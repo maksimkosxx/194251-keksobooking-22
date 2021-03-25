@@ -1,6 +1,6 @@
 /* global L:readonly */
 import { initCoords, initMap, mainPinMarker, mapPoints, fieldAddress } from './utils.js';
-import createTemplate from './createTemplate.js';
+import createTemplate from './create-template.js';
 import Filters from './filters.js';
 
 
@@ -15,7 +15,6 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(initMap);
-
 
 mainPinMarker.addTo(initMap);
 

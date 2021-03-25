@@ -35,7 +35,7 @@ const errorResponse = err => {
       layout.remove();
     }, 250)
   });
-  pageBody.addEventListener('keydown', (evt) => {
+  popup && pageBody.addEventListener('keydown', (evt) => {
     if(evt.key === 'Escape' || evt.key === 'Esc') {
       popup.remove();
 
