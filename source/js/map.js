@@ -7,7 +7,7 @@ import Filters from './filters.js';
 initMap.setView({
   lat: initCoords.lat,
   lng: initCoords.lng,
-}, 10);
+}, 9);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',

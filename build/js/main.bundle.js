@@ -441,7 +441,7 @@ __webpack_require__.r(__webpack_exports__);
 _utils_js__WEBPACK_IMPORTED_MODULE_0__.initMap.setView({
   lat: _utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lat,
   lng: _utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lng,
-}, 10);
+}, 9);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
