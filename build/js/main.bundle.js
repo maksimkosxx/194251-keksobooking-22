@@ -62,7 +62,7 @@ const setData = () => {
           (0,_helpers_js__WEBPACK_IMPORTED_MODULE_3__.createRespondingMessage)('error');
         }
       })
-      .catch((err) => alert(err))
+      .catch(() => (0,_helpers_js__WEBPACK_IMPORTED_MODULE_3__.createRespondingMessage)('error'))
   })
 }
 
@@ -97,10 +97,10 @@ const changeFilters = (cb) => {
 
 /***/ }),
 
-/***/ "./source/js/create-template.js":
-/*!**************************************!*\
-  !*** ./source/js/create-template.js ***!
-  \**************************************/
+/***/ "./source/js/create-popup.js":
+/*!***********************************!*\
+  !*** ./source/js/create-popup.js ***!
+  \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -110,7 +110,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers.js */ "./source/js/helpers.js");
 
 
-const createTemplate = data => {
+const createPopup = data => {
 
   const initTemplate = document.querySelector('#card').content;
   const templateItem = initTemplate.querySelector('.popup');
@@ -178,7 +178,7 @@ const createTemplate = data => {
   return newItem;
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createTemplate);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createPopup);
 
 
 /***/ }),
@@ -198,13 +198,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const mapFeatures = document.querySelector('.map__features');
+const allMapFilters = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFilterForm.querySelectorAll('.map__filter');
+const allFieldset = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelectorAll('fieldset');
+
 const errorResponse = err => {
 
   _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.classList.add('ad-form--disabled');
-  (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.addDisabledValue)(_utils_js__WEBPACK_IMPORTED_MODULE_0__.allFieldset, true);
+  (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.addDisabledValue)(allFieldset, true);
   _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFilterForm.classList.add('map__filters--disabled');
-  _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFeatures.classList.add('map__features--disabled');
-  (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.addDisabledValue)(_utils_js__WEBPACK_IMPORTED_MODULE_0__.allMapFilters, true);
+  mapFeatures.classList.add('map__features--disabled');
+  (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.addDisabledValue)(allMapFilters, true);
 
   const layout = document.createElement('div');
   layout.classList.add('message__layout')
@@ -271,24 +275,32 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const typeSelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFilterForm.querySelector('#housing-type');
+const priceSelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFilterForm.querySelector('#housing-price');
+const roomsSelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFilterForm.querySelector('#housing-rooms');
+const guestsSelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFilterForm.querySelector('#housing-guests');
+const featuresFieldset = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFilterForm.querySelector('#housing-features');
+
+
+
 const Filters = (data) => {
 
   const filtrationItem = (el, item, param) => el.value === 'any' ? true : el.value === item[param].toString();
 
-  const filtrationType = (item) => filtrationItem(_utils_js__WEBPACK_IMPORTED_MODULE_0__.typeSelect, item.offer, 'type');
+  const filtrationType = (item) => filtrationItem(typeSelect, item.offer, 'type');
 
   const filtrationPrice = (item) => {
-    const filteringPrice = (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.getPrice)(_utils_js__WEBPACK_IMPORTED_MODULE_0__.priceSelect.value);
+    const filteringPrice = (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.getPrice)(priceSelect.value);
     return filteringPrice ? item.offer.price >= filteringPrice.min && item.offer.price <= filteringPrice.max : true;
   };
 
-  const filtrationRooms = (item) => filtrationItem(_utils_js__WEBPACK_IMPORTED_MODULE_0__.roomsSelect, item.offer, 'rooms');
+  const filtrationRooms = (item) => filtrationItem(roomsSelect, item.offer, 'rooms');
 
-  const filtrationGuests = (item) => filtrationItem(_utils_js__WEBPACK_IMPORTED_MODULE_0__.guestsSelect, item.offer, 'guests');
+  const filtrationGuests = (item) => filtrationItem(guestsSelect, item.offer, 'guests');
 
   const filtrationFeatures = (item) => {
 
-    const checkedFeaturesItems = _utils_js__WEBPACK_IMPORTED_MODULE_0__.featuresFieldset.querySelectorAll('input:checked');
+    const checkedFeaturesItems = featuresFieldset.querySelectorAll('input:checked');
 
     const featuresArr = [...checkedFeaturesItems];
 
@@ -430,15 +442,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils.js */ "./source/js/utils.js");
-/* harmony import */ var _create_template_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create-template.js */ "./source/js/create-template.js");
+/* harmony import */ var _create_popup_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create-popup.js */ "./source/js/create-popup.js");
 /* harmony import */ var _filters_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./filters.js */ "./source/js/filters.js");
+/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers.js */ "./source/js/helpers.js");
 /* global L:readonly */
 
 
 
 
 
-_utils_js__WEBPACK_IMPORTED_MODULE_0__.initMap.setView({
+
+
+const initMap = L.map('map-canvas');
+
+initMap.setView({
   lat: _utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lat,
   lng: _utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lng,
 }, 9);
@@ -448,14 +465,32 @@ L.tileLayer(
   {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
-).addTo(_utils_js__WEBPACK_IMPORTED_MODULE_0__.initMap);
+).addTo(initMap);
 
-_utils_js__WEBPACK_IMPORTED_MODULE_0__.mainPinMarker.addTo(_utils_js__WEBPACK_IMPORTED_MODULE_0__.initMap);
+const mainPinIcon = L.icon({
+  iconUrl: '../img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+})
+
+const mainPinMarker = L.marker(
+  {
+    lat: _utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lat,
+    lng: _utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lng,
+  },
+  {
+    draggable: true,
+    icon: mainPinIcon,
+  },
+);
+const mapPoints = L.layerGroup().addTo(initMap);
+
+mainPinMarker.addTo(initMap);
 
 _utils_js__WEBPACK_IMPORTED_MODULE_0__.fieldAddress.readOnly = true;
 _utils_js__WEBPACK_IMPORTED_MODULE_0__.fieldAddress.value = `${_utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lat}, ${_utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lng}`;
 
-_utils_js__WEBPACK_IMPORTED_MODULE_0__.mainPinMarker.on('moveend', (evt) => {
+mainPinMarker.on('moveend', (evt) => {
   const coords = evt.target.getLatLng();
   _utils_js__WEBPACK_IMPORTED_MODULE_0__.fieldAddress.value = `${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`;
 });
@@ -465,7 +500,7 @@ const renderMarkers = (data) => {
 
   const POINTS_LIMIT = 10;
 
-  _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapPoints.clearLayers();
+  mapPoints.clearLayers();
 
   const resultData = (0,_filters_js__WEBPACK_IMPORTED_MODULE_2__.default)(data).slice(0, POINTS_LIMIT);
 
@@ -473,10 +508,10 @@ const renderMarkers = (data) => {
 
     const {lat, lng} = item.location;
 
-    const popup = (0,_create_template_js__WEBPACK_IMPORTED_MODULE_1__.default)(item);
+    const popup = (0,_create_popup_js__WEBPACK_IMPORTED_MODULE_1__.default)(item);
 
     const icon = L.icon({
-      iconUrl: '../img/pin.svg',
+      iconUrl: 'img/pin.svg',
       iconSize: [40, 40],
       iconAnchor: [20, 40],
     });
@@ -484,7 +519,7 @@ const renderMarkers = (data) => {
     const marker = L.marker({lat, lng}, {icon});
 
     marker
-      .addTo(_utils_js__WEBPACK_IMPORTED_MODULE_0__.mapPoints)
+      .addTo(mapPoints)
       .bindPopup(popup,
         {
           keepInView: true,
@@ -492,6 +527,21 @@ const renderMarkers = (data) => {
       );
   });
 }
+
+const btnReset = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('.ad-form__reset');
+const avatar = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('.ad-form-header__preview > img');
+const photo = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('.ad-form__photo');
+
+btnReset.addEventListener('click', ()=> {
+  _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.reset();
+  _utils_js__WEBPACK_IMPORTED_MODULE_0__.priceInput.placeholder = '1000';
+  _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFilterForm.reset();
+  avatar.src = 'img/muffin-grey.svg';
+  photo.style.backgroundImage = '';
+  mapPoints.clearLayers();
+  (0,_helpers_js__WEBPACK_IMPORTED_MODULE_3__.setAddressValue)();
+  mainPinMarker.setLatLng(_utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords);
+})
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (renderMarkers);
 
@@ -568,46 +618,49 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const typeFormInput = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('#type');
+const timeinSelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('#timein');
+const timeoutSelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('#timeout');
+const roomNumberSelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('#room_number');
+const capacitySelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('#capacity');
+
+
 const useForm = () => {
-  const btnReset = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('.ad-form__reset');
-  const avatar = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('.ad-form-header__preview > img');
-  const photo = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('.ad-form__photo');
 
-
-  _utils_js__WEBPACK_IMPORTED_MODULE_0__.typeFormInput.addEventListener('change' , (evt) => {
+  typeFormInput.addEventListener('change' , (evt) => {
     const currentValue = evt.target.value;
     _utils_js__WEBPACK_IMPORTED_MODULE_0__.priceInput.placeholder = (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.getMinPrice)(currentValue).toString();
   })
 
-  _utils_js__WEBPACK_IMPORTED_MODULE_0__.timeinSelect.addEventListener('change', (evt) => {
-    _utils_js__WEBPACK_IMPORTED_MODULE_0__.timeoutSelect.value = evt.target.value;
+  timeinSelect.addEventListener('change', (evt) => {
+    timeoutSelect.value = evt.target.value;
   })
-  _utils_js__WEBPACK_IMPORTED_MODULE_0__.timeoutSelect.addEventListener('change', (evt) => {
-    _utils_js__WEBPACK_IMPORTED_MODULE_0__.timeinSelect.value = evt.target.value;
+  timeoutSelect.addEventListener('change', (evt) => {
+    timeinSelect.value = evt.target.value;
   })
 
 
-  const allCapacityOptions = _utils_js__WEBPACK_IMPORTED_MODULE_0__.capacitySelect.children;
+  const allCapacityOptions = capacitySelect.children;
   const options = [...allCapacityOptions];
   options.map(option => option.value !== '1' ? option.disabled = true : option.disabled = false);
 
-  _utils_js__WEBPACK_IMPORTED_MODULE_0__.roomNumberSelect.addEventListener('change', (evt) => {
+  roomNumberSelect.addEventListener('change', (evt) => {
 
     const selectedValue = evt.target.value;
     options.map(option => option.disabled = true);
 
     (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.getRoomsValue)(selectedValue).map((item) => {
-      _utils_js__WEBPACK_IMPORTED_MODULE_0__.capacitySelect.querySelector('option' + '[value="' + item + '"]').disabled = false;
+      capacitySelect.querySelector('option' + '[value="' + item + '"]').disabled = false;
     })
   })
 
   _utils_js__WEBPACK_IMPORTED_MODULE_0__.priceInput.addEventListener('input', (evt) => {
 
     const inputValue = evt.target.value;
-    const LIMIT = (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.getMinPrice)(_utils_js__WEBPACK_IMPORTED_MODULE_0__.typeFormInput.value);
+    const priceLimit = (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.getMinPrice)(typeFormInput.value);
 
-    if (inputValue < LIMIT) {
-      evt.target.setCustomValidity(`Цена должна не менее чем ${LIMIT} руб.`);
+    if (inputValue < priceLimit) {
+      evt.target.setCustomValidity(`Цена должна не менее чем ${priceLimit} руб.`);
     }
     else {
       evt.target.setCustomValidity('');
@@ -619,16 +672,7 @@ const useForm = () => {
   (0,_upload_image_js__WEBPACK_IMPORTED_MODULE_2__.default)('#avatar', '.ad-form-header__preview > img');
   (0,_upload_image_js__WEBPACK_IMPORTED_MODULE_2__.default)('#images', '.ad-form__photo', true);
 
-  btnReset.addEventListener('click', ()=> {
-    _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.reset();
-    _utils_js__WEBPACK_IMPORTED_MODULE_0__.priceInput.placeholder = '1000';
-    _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFilterForm.reset();
-    avatar.src = 'img/muffin-grey.svg';
-    photo.style.backgroundImage = '';
-    _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapPoints.clearLayers();
-    (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.setAddressValue)();
-    _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainPinMarker.setLatLng(_utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords);
-  })
+
 
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useForm);
@@ -646,29 +690,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "pageBody": () => (/* binding */ pageBody),
 /* harmony export */   "initCoords": () => (/* binding */ initCoords),
-/* harmony export */   "initMap": () => (/* binding */ initMap),
-/* harmony export */   "mainPinMarker": () => (/* binding */ mainPinMarker),
-/* harmony export */   "mapPoints": () => (/* binding */ mapPoints),
 /* harmony export */   "mainForm": () => (/* binding */ mainForm),
 /* harmony export */   "mapFilterForm": () => (/* binding */ mapFilterForm),
-/* harmony export */   "allMapFilters": () => (/* binding */ allMapFilters),
-/* harmony export */   "allFieldset": () => (/* binding */ allFieldset),
-/* harmony export */   "mapFeatures": () => (/* binding */ mapFeatures),
 /* harmony export */   "fieldAddress": () => (/* binding */ fieldAddress),
-/* harmony export */   "typeFormInput": () => (/* binding */ typeFormInput),
-/* harmony export */   "priceInput": () => (/* binding */ priceInput),
-/* harmony export */   "timeinSelect": () => (/* binding */ timeinSelect),
-/* harmony export */   "timeoutSelect": () => (/* binding */ timeoutSelect),
-/* harmony export */   "roomNumberSelect": () => (/* binding */ roomNumberSelect),
-/* harmony export */   "capacitySelect": () => (/* binding */ capacitySelect),
-/* harmony export */   "typeSelect": () => (/* binding */ typeSelect),
-/* harmony export */   "priceSelect": () => (/* binding */ priceSelect),
-/* harmony export */   "roomsSelect": () => (/* binding */ roomsSelect),
-/* harmony export */   "guestsSelect": () => (/* binding */ guestsSelect),
-/* harmony export */   "featuresFieldset": () => (/* binding */ featuresFieldset)
+/* harmony export */   "priceInput": () => (/* binding */ priceInput)
 /* harmony export */ });
-/* global L:readonly */
-
 const pageBody = document.querySelector('body');
 
 const initCoords = {
@@ -676,45 +702,10 @@ const initCoords = {
   lng: 139.75394,
 }
 
-const initMap = L.map('map-canvas');
-
-const mainPinIcon = L.icon({
-  iconUrl: '../img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
-})
-
-const mainPinMarker = L.marker(
-  {
-    lat: initCoords.lat,
-    lng: initCoords.lng,
-  },
-  {
-    draggable: true,
-    icon: mainPinIcon,
-  },
-);
-const mapPoints = L.layerGroup().addTo(initMap);
-
 const mainForm = document.querySelector('.ad-form');
 const mapFilterForm = document.querySelector('.map__filters');
-const mapFeatures = document.querySelector('.map__features');
-const allMapFilters = mapFilterForm.querySelectorAll('.map__filter');
-const allFieldset = mainForm.querySelectorAll('fieldset');
 const fieldAddress = mainForm.querySelector('#address');
-
-const typeFormInput = mainForm.querySelector('#type');
 const priceInput = mainForm.querySelector('#price');
-const timeinSelect = mainForm.querySelector('#timein');
-const timeoutSelect = mainForm.querySelector('#timeout');
-const roomNumberSelect = mainForm.querySelector('#room_number');
-const capacitySelect = mainForm.querySelector('#capacity');
-
-const typeSelect = mapFilterForm.querySelector('#housing-type');
-const priceSelect = mapFilterForm.querySelector('#housing-price');
-const roomsSelect = mapFilterForm.querySelector('#housing-rooms');
-const guestsSelect = mapFilterForm.querySelector('#housing-guests');
-const featuresFieldset = mapFilterForm.querySelector('#housing-features');
 
 
 

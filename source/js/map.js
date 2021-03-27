@@ -1,8 +1,12 @@
 /* global L:readonly */
-import { initCoords, initMap, mainPinMarker, mapPoints, fieldAddress } from './utils.js';
-import createTemplate from './create-template.js';
+import {initCoords, fieldAddress, mainForm, priceInput, mapFilterForm} from './utils.js';
+import createPopup from './create-popup.js';
 import Filters from './filters.js';
+import {setAddressValue} from './helpers.js';
 
+
+
+const initMap = L.map('map-canvas');
 
 initMap.setView({
   lat: initCoords.lat,
@@ -15,6 +19,24 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(initMap);
+
+const mainPinIcon = L.icon({
+  iconUrl: '../img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+})
+
+const mainPinMarker = L.marker(
+  {
+    lat: initCoords.lat,
+    lng: initCoords.lng,
+  },
+  {
+    draggable: true,
+    icon: mainPinIcon,
+  },
+);
+const mapPoints = L.layerGroup().addTo(initMap);
 
 mainPinMarker.addTo(initMap);
 
@@ -39,10 +61,10 @@ const renderMarkers = (data) => {
 
     const {lat, lng} = item.location;
 
-    const popup = createTemplate(item);
+    const popup = createPopup(item);
 
     const icon = L.icon({
-      iconUrl: '../img/pin.svg',
+      iconUrl: 'img/pin.svg',
       iconSize: [40, 40],
       iconAnchor: [20, 40],
     });
@@ -58,5 +80,20 @@ const renderMarkers = (data) => {
       );
   });
 }
+
+const btnReset = mainForm.querySelector('.ad-form__reset');
+const avatar = mainForm.querySelector('.ad-form-header__preview > img');
+const photo = mainForm.querySelector('.ad-form__photo');
+
+btnReset.addEventListener('click', ()=> {
+  mainForm.reset();
+  priceInput.placeholder = '1000';
+  mapFilterForm.reset();
+  avatar.src = 'img/muffin-grey.svg';
+  photo.style.backgroundImage = '';
+  mapPoints.clearLayers();
+  setAddressValue();
+  mainPinMarker.setLatLng(initCoords);
+})
 
 export default renderMarkers;

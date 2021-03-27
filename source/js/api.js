@@ -43,7 +43,7 @@ const setData = () => {
           respondingMessage('error');
         }
       })
-      .catch((err) => alert(err))
+      .catch(() => respondingMessage('error'))
   })
 }
 

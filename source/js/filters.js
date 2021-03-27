@@ -1,5 +1,13 @@
-import { typeSelect, priceSelect, roomsSelect, guestsSelect, featuresFieldset } from './utils.js';
+import {mapFilterForm} from './utils.js';
 import {getPrice} from './helpers.js';
+
+
+const typeSelect = mapFilterForm.querySelector('#housing-type');
+const priceSelect = mapFilterForm.querySelector('#housing-price');
+const roomsSelect = mapFilterForm.querySelector('#housing-rooms');
+const guestsSelect = mapFilterForm.querySelector('#housing-guests');
+const featuresFieldset = mapFilterForm.querySelector('#housing-features');
+
 
 
 const Filters = (data) => {
