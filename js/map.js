@@ -56,9 +56,7 @@ const renderMarkers = (data) => {
           keepInView: true,
         },
       );
-
   });
-
 }
 
 export default renderMarkers;

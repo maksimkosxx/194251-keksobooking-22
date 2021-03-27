@@ -12,10 +12,13 @@ import {
   capacitySelect
 } from './utils.js';
 import { setAddressValue, getMinPrice, getRoomsValue } from './helpers.js';
+import uploadImage from './upload-image.js';
 
 
 const useForm = () => {
   const btnReset = mainForm.querySelector('.ad-form__reset');
+  const avatar = mainForm.querySelector('.ad-form-header__preview > img');
+  const photo = mainForm.querySelector('.ad-form__photo');
 
 
   typeFormInput.addEventListener('change' , (evt) => {
@@ -60,11 +63,15 @@ const useForm = () => {
     evt.target.reportValidity();
   });
 
+  uploadImage('#avatar', '.ad-form-header__preview > img');
+  uploadImage('#images', '.ad-form__photo', true);
 
   btnReset.addEventListener('click', ()=> {
     mainForm.reset();
     priceInput.placeholder = '1000';
     mapFilterForm.reset();
+    avatar.src = 'img/muffin-grey.svg';
+    photo.style.backgroundImage = '';
     mapPoints.clearLayers();
     setAddressValue();
     mainPinMarker.setLatLng(initCoords);
