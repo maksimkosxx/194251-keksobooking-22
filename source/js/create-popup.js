@@ -1,6 +1,6 @@
 import {getType} from './helpers.js';
 
-const createTemplate = data => {
+const createPopup = data => {
 
   const initTemplate = document.querySelector('#card').content;
   const templateItem = initTemplate.querySelector('.popup');
@@ -68,4 +68,4 @@ const createTemplate = data => {
   return newItem;
 }
 
-export default createTemplate;
+export default createPopup;
