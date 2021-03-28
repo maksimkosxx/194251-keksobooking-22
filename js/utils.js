@@ -1,11 +1,11 @@
 /* global L:readonly */
 
-const pageBody = document.querySelector('body');
-
-const initCoords = {
+const INIT_COORDS = {
   lat: 35.68697,
   lng: 139.75394,
 }
+
+const pageBody = document.querySelector('body');
 
 const initMap = L.map('map-canvas');
 
@@ -17,8 +17,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: initCoords.lat,
-    lng: initCoords.lng,
+    lat: INIT_COORDS.lat,
+    lng: INIT_COORDS.lng,
   },
   {
     draggable: true,
@@ -49,8 +49,8 @@ const featuresFieldset = mapFilterForm.querySelector('#housing-features');
 
 
 export {
+  INIT_COORDS,
   pageBody,
-  initCoords,
   initMap,
   mainPinMarker,
   mapPoints,

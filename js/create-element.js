@@ -1,8 +1,8 @@
 
 const createElement = (element, content) => {
   if (element.textContent.length) {
-    return element.textContent = content
+    element.textContent = content
   } else
-    return element.remove();
+    element.remove();
 }
 export default  createElement;

@@ -1,4 +1,4 @@
-import {initCoords, fieldAddress} from './utils.js';
+import {INIT_COORDS, fieldAddress} from './utils.js';
 
 const getType = {
   flat: 'Квартира',
@@ -44,7 +44,7 @@ const addDisabledValue = (array, value) => {
 }
 
 const setAddressValue = () => {
-  fieldAddress.value = `${initCoords.lat}, ${initCoords.lng}`;
+  fieldAddress.value = `${INIT_COORDS.lat}, ${INIT_COORDS.lng}`;
 };
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';

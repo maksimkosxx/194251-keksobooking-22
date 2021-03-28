@@ -1,4 +1,3 @@
-
 const createPhotosList = (list, item, array, alt) => {
   list.innerHTML = ''
   if (array.length) {
@@ -9,7 +8,7 @@ const createPhotosList = (list, item, array, alt) => {
       list.appendChild(listItem);
     })
   } else {
-    return list.remove()
+    list.remove()
   }
 }
 

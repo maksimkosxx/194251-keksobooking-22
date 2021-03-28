@@ -1,5 +1,5 @@
 import changeFilters from './change-filters.js';
-import errorResponse from './error.js';
+import createApiResponse from './error.js';
 import {mainForm, mapFilterForm} from './utils.js';
 import {setAddressValue} from './helpers.js';
 import createMessage from './create-message.js';
@@ -22,7 +22,7 @@ const getData = (cb) => {
       changeFilters(() => cb(json))
     })
     .catch(err => {
-      errorResponse(err);
+      createApiResponse(err);
     })
 }
 

@@ -2,7 +2,7 @@ import {allFieldset, allMapFilters, mainForm, mapFeatures, mapFilterForm, pageBo
 import {addDisabledValue, handlerClick, handlerKeyDown} from './helpers.js';
 
 
-const errorResponse = err => {
+const createApiResponse = err => {
 
   mainForm.classList.add('ad-form--disabled');
   addDisabledValue(allFieldset, true);
@@ -37,4 +37,4 @@ const errorResponse = err => {
   handlerClick(close, popup, layout);
 }
 
-export default errorResponse;
+export default createApiResponse;

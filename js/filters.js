@@ -3,20 +3,20 @@ import {getFilterPrice} from './helpers.js';
 
 const anyValue = 'any';
 
-const filtrationItem = (el, item, param) => el.value === anyValue ? true : el.value === item[param].toString();
+const filtratedItem = (el, item, param) => el.value === anyValue ? true : el.value === item[param].toString();
 
-const filtrationType = item => filtrationItem(typeSelect, item.offer, 'type');
+const filtratedType = item => filtratedItem(typeSelect, item.offer, 'type');
 
-const filtrationPrice = (item) => {
+const filtratedPrice = (item) => {
   const filteringPrice = getFilterPrice[priceSelect.value];
   return filteringPrice ? item.offer.price >= filteringPrice.min && item.offer.price <= filteringPrice.max : true;
 };
 
-const filtrationRooms = item => filtrationItem(roomsSelect, item.offer, 'rooms');
+const filtratedRooms = item => filtratedItem(roomsSelect, item.offer, 'rooms');
 
-const filtrationGuests = item => filtrationItem(guestsSelect, item.offer, 'guests');
+const filtratedGuests = item => filtratedItem(guestsSelect, item.offer, 'guests');
 
-const filtrationFeatures = (item) => {
+const filtratedFeatures = (item) => {
 
   const checkedFeaturesItems = featuresFieldset.querySelectorAll('input:checked');
 
@@ -26,14 +26,14 @@ const filtrationFeatures = (item) => {
 };
 
 
-const Filters = (data) => {
+const filtratedData = (data) => {
 
   return data
-    .filter(filtrationType)
-    .filter(filtrationPrice)
-    .filter(filtrationRooms)
-    .filter(filtrationGuests)
-    .filter(filtrationFeatures);
+    .filter(filtratedType)
+    .filter(filtratedPrice)
+    .filter(filtratedRooms)
+    .filter(filtratedGuests)
+    .filter(filtratedFeatures);
 }
 
-export default Filters;
+export default filtratedData;

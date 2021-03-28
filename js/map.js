@@ -1,12 +1,14 @@
 /* global L:readonly */
-import { initCoords, initMap, mainPinMarker, mapPoints, fieldAddress } from './utils.js';
+import { INIT_COORDS, initMap, mainPinMarker, mapPoints, fieldAddress } from './utils.js';
 import createPopup from './create-popup.js';
-import Filters from './filters.js';
+import filtratedData from './filters.js';
 
+
+const POINTS_LIMIT = 10;
 
 initMap.setView({
-  lat: initCoords.lat,
-  lng: initCoords.lng,
+  lat: INIT_COORDS.lat,
+  lng: INIT_COORDS.lng,
 }, 9);
 
 L.tileLayer(
@@ -19,7 +21,7 @@ L.tileLayer(
 mainPinMarker.addTo(initMap);
 
 fieldAddress.readOnly = true;
-fieldAddress.value = `${initCoords.lat}, ${initCoords.lng}`;
+fieldAddress.value = `${INIT_COORDS.lat}, ${INIT_COORDS.lng}`;
 
 mainPinMarker.addEventListener('mousemove', (evt) => {
   const coords = evt.target.getLatLng();
@@ -29,11 +31,9 @@ mainPinMarker.addEventListener('mousemove', (evt) => {
 
 const renderMarkers = (data) => {
 
-  const POINTS_LIMIT = 10;
-
   mapPoints.clearLayers();
 
-  const resultData = Filters(data).slice(0, POINTS_LIMIT);
+  const resultData = filtratedData(data).slice(0, POINTS_LIMIT);
 
   resultData.map(item => {
 
