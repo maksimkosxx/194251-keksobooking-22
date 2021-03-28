@@ -1,11 +1,16 @@
 import changeFilters from './change-filters.js';
 import errorResponse from './error.js';
 import {mainForm, mapFilterForm} from './utils.js';
-import {createRespondingMessage as respondingMessage, setAddressValue} from './helpers.js';
+import {setAddressValue} from './helpers.js';
+import createMessage from './create-message.js';
 
+const URL = {
+  get: 'https://22.javascript.pages.academy/keksobooking/data',
+  post: 'https://22.javascript.pages.academy/keksobooking',
+}
 
 const getData = (cb) => {
-  fetch('https://22.javascript.pages.academy/keksobooking/data')
+  fetch(URL.get)
     .then((response) => {
       if(response.ok ) {
         return response.json()
@@ -28,7 +33,7 @@ const setData = () => {
 
     const formData = new FormData(evt.target);
 
-    fetch('https://22.javascript.pages.academy/keksobooking',
+    fetch(URL.post,
       {
         method: 'POST',
         body: formData,
@@ -38,12 +43,12 @@ const setData = () => {
           mainForm.reset();
           mapFilterForm.reset();
           setAddressValue();
-          respondingMessage('success');
+          createMessage('success');
         } else {
-          respondingMessage('error');
+          throw new Error;
         }
       })
-      .catch((err) => alert(err))
+      .catch(() => createMessage('error'))
   })
 }
 

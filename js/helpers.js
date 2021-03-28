@@ -1,90 +1,78 @@
-import {initCoords, fieldAddress, pageBody} from './utils.js';
+import {initCoords, fieldAddress} from './utils.js';
 
-
-const getType = (type) => {
-  switch (type) {
-    case 'flat':
-      return 'Квартира';
-    case 'bungalow':
-      return 'Бунгало';
-    case 'house':
-      return 'Дом';
-    case 'palace':
-      return 'Дворец';
-  }
+const getType = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
 }
 
-const getMinPrice = (type) => {
-  switch (type) {
-    case 'flat':
-      return 1000;
-    case 'bungalow':
-      return 0;
-    case 'house':
-      return 5000;
-    case 'palace':
-      return 10000;
-  }
+const getMinPrice = {
+  flat: 1000,
+  bungalow: 0,
+  house: 5000,
+  palace: 10000,
 }
 
-const getRoomsValue = (value) => {
-  switch (value) {
-    case '1':
-      return ['1'];
-    case '2':
-      return ['1', '2'];
-    case '3':
-      return ['1', '2', '3'];
-    case '100':
-      return ['0'];
-  }
+const getRoomsValue = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0],
 }
 
-const getPrice = (price) => {
-  switch (price) {
-    case 'low':
-      return {min: 0, max: 10000};
-    case 'middle':
-      return {min: 10000, max: 50000};
-    case 'high':
-      return {min: 50000, max: Infinity};
-  }
+const getFilterPrice = {
+  'low': {
+    min: 0,
+    max: 10000,
+  },
+  'middle': {
+    min: 10000,
+    max: 50000,
+  },
+  'high': {
+    min: 50000,
+    max: Infinity,
+  },
 }
+
 
 const addDisabledValue = (array, value) => {
-  for (let i = 0; i < array.length; i++) {
-    array[i].disabled = value;
+  for (let item of array) {
+    item.disabled = value;
   }
 }
 
 const setAddressValue = () => {
-  setTimeout(()=> {
-    fieldAddress.value = `${initCoords.lat}, ${initCoords.lng}`;
-  }, 200)
+  fieldAddress.value = `${initCoords.lat}, ${initCoords.lng}`;
 };
 
-const createRespondingMessage = (selector) => {
-  const messageId = `#${selector}`;
-  const messageClass = `.${selector}`;
-  const messageBtnClass = `${messageClass}__button`;
-  const initTemplate = document.querySelector(messageId).content.cloneNode(true);
-  const newMessage = initTemplate.querySelector(messageClass);
-  const messageBtn = initTemplate.querySelector(messageBtnClass);
-  pageBody.appendChild(newMessage);
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-  pageBody.addEventListener('keydown', (evt) => {
-    if(evt.key === 'Escape' || evt.key === 'Esc') {
-      newMessage.remove();
-    }
-  });
-  if(messageBtn) {
-    messageBtn.addEventListener('click', () => {
-      newMessage.remove();
-    });
-  } else {
-    pageBody.addEventListener('click', () => {
-      newMessage.remove();
-    });
-  }
+const handlerKeyDown = (targetElement, item, additionalItem) => {
+  targetElement.addEventListener('keydown', (evt) => isEscEvent(evt) ? removeElement(item, additionalItem) : '');
 }
-export {addDisabledValue, setAddressValue, createRespondingMessage, getType, getMinPrice, getRoomsValue, getPrice}
+
+const handlerClick = (targetElement, item, additionalItem) => {
+  targetElement.addEventListener('click', () => removeElement(item, additionalItem));
+}
+
+const removeElement = (item, additionalItem) => {
+  item.remove();
+  additionalItem ? additionalItem.remove() : '';
+  document.removeEventListener('click', () => removeElement);
+  document.removeEventListener('keydown', () => removeElement);
+}
+
+export {
+  addDisabledValue,
+  setAddressValue,
+  isEscEvent,
+  handlerClick,
+  handlerKeyDown,
+  removeElement,
+  getType,
+  getMinPrice,
+  getRoomsValue,
+  getFilterPrice
+}

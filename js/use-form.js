@@ -20,7 +20,7 @@ const useForm = () => {
 
   typeFormInput.addEventListener('change' , (evt) => {
     const currentValue = evt.target.value;
-    priceInput.placeholder = getMinPrice(currentValue).toString();
+    priceInput.placeholder = getMinPrice[currentValue].toString();
   })
 
   timeinSelect.addEventListener('change', (evt) => {
@@ -40,7 +40,7 @@ const useForm = () => {
     const selectedValue = evt.target.value;
     options.map(option => option.disabled = true);
 
-    getRoomsValue(selectedValue).map((item) => {
+    getRoomsValue[selectedValue].map((item) => {
       capacitySelect.querySelector('option' + '[value="' + item + '"]').disabled = false;
     })
   })
@@ -48,7 +48,7 @@ const useForm = () => {
   priceInput.addEventListener('input', (evt) => {
 
     const inputValue = evt.target.value;
-    const LIMIT = getMinPrice(typeFormInput.value);
+    const LIMIT = getMinPrice[typeFormInput.value];
 
     if (inputValue < LIMIT) {
       evt.target.setCustomValidity(`Цена должна не менее чем ${LIMIT} руб.`);

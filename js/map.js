@@ -1,6 +1,6 @@
 /* global L:readonly */
 import { initCoords, initMap, mainPinMarker, mapPoints, fieldAddress } from './utils.js';
-import createTemplate from './create-template.js';
+import createPopup from './create-popup.js';
 import Filters from './filters.js';
 
 
@@ -21,7 +21,7 @@ mainPinMarker.addTo(initMap);
 fieldAddress.readOnly = true;
 fieldAddress.value = `${initCoords.lat}, ${initCoords.lng}`;
 
-mainPinMarker.on('moveend', (evt) => {
+mainPinMarker.addEventListener('mousemove', (evt) => {
   const coords = evt.target.getLatLng();
   fieldAddress.value = `${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`;
 });
@@ -39,7 +39,7 @@ const renderMarkers = (data) => {
 
     const {lat, lng} = item.location;
 
-    const popup = createTemplate(item);
+    const popup = createPopup(item);
 
     const icon = L.icon({
       iconUrl: '../img/pin.svg',
@@ -56,9 +56,7 @@ const renderMarkers = (data) => {
           keepInView: true,
         },
       );
-
   });
-
 }
 
 export default renderMarkers;

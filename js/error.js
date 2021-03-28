@@ -1,5 +1,6 @@
 import {allFieldset, allMapFilters, mainForm, mapFeatures, mapFilterForm, pageBody} from './utils.js';
-import {addDisabledValue} from './helpers.js';
+import {addDisabledValue, handlerClick, handlerKeyDown} from './helpers.js';
+
 
 const errorResponse = err => {
 
@@ -22,28 +23,7 @@ const errorResponse = err => {
   title.textContent = err;
   const description =  document.createElement('p');
   description.classList.add('message__description');
-  description.textContent = 'Данные не загружены, перезагрузите страницу или попробуйте позднее'
-
-  layout.addEventListener('click', () => {
-    layout.remove();
-    popup.remove();
-  });
-  close.addEventListener('click', () => {
-    popup.remove();
-
-    setTimeout(() => {
-      layout.remove();
-    }, 250)
-  });
-  popup && pageBody.addEventListener('keydown', (evt) => {
-    if(evt.key === 'Escape' || evt.key === 'Esc') {
-      popup.remove();
-
-      setTimeout(() => {
-        layout.remove();
-      }, 250)
-    }
-  });
+  description.textContent = 'Данные не загружены, перезагрузите страницу или попробуйте позднее';
 
   popup.appendChild(close);
   popup.appendChild(title);
@@ -52,5 +32,9 @@ const errorResponse = err => {
   pageBody.appendChild(layout);
   pageBody.appendChild(popup);
 
+  handlerKeyDown(pageBody, popup, layout);
+  handlerClick(layout, popup, layout);
+  handlerClick(close, popup, layout);
 }
+
 export default errorResponse;
