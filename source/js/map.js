@@ -1,10 +1,36 @@
 /* global L:readonly */
-import { INIT_COORDS, initMap, mainPinMarker, mapPoints, fieldAddress } from './utils.js';
+import {INIT_COORDS, fieldAddress, mainForm, priceInput, mapFilterForm} from './utils.js';
 import createPopup from './create-popup.js';
 import filtratedData from './filters.js';
+import {setAddressValue} from './helpers.js';
 
 
 const POINTS_LIMIT = 10;
+
+const btnReset = mainForm.querySelector('.ad-form__reset');
+const avatar = mainForm.querySelector('.ad-form-header__preview > img');
+const photo = mainForm.querySelector('.ad-form__photo');
+
+const initMap = L.map('map-canvas');
+
+const mainPinIcon = L.icon({
+  iconUrl: '../img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+})
+
+const mainPinMarker = L.marker(
+  {
+    lat: INIT_COORDS.lat,
+    lng: INIT_COORDS.lng,
+  },
+  {
+    draggable: true,
+    icon: mainPinIcon,
+  },
+);
+
+const mapPoints = L.layerGroup().addTo(initMap);
 
 initMap.setView({
   lat: INIT_COORDS.lat,
@@ -58,5 +84,16 @@ const renderMarkers = (data) => {
       );
   });
 }
+
+btnReset.addEventListener('click', ()=> {
+  mainForm.reset();
+  priceInput.placeholder = '1000';
+  mapFilterForm.reset();
+  avatar.src = 'img/muffin-grey.svg';
+  photo.style.backgroundImage = '';
+  mapPoints.clearLayers();
+  setAddressValue();
+  mainPinMarker.setLatLng(INIT_COORDS);
+})
 
 export default renderMarkers;
