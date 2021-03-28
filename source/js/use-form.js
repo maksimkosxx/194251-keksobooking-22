@@ -1,13 +1,13 @@
-import {
-  typeFormInput,
-  priceInput,
-  timeinSelect,
-  timeoutSelect,
-  roomNumberSelect,
-  capacitySelect
-} from './utils.js';
+import {priceInput, mainForm} from './utils.js';
 import { getMinPrice, getRoomsValue } from './helpers.js';
 import uploadImage from './upload-image.js';
+
+
+const typeFormInput = mainForm.querySelector('#type');
+const timeinSelect = mainForm.querySelector('#timein');
+const timeoutSelect = mainForm.querySelector('#timeout');
+const roomNumberSelect = mainForm.querySelector('#room_number');
+const capacitySelect = mainForm.querySelector('#capacity');
 
 
 const useForm = () => {
@@ -56,6 +56,6 @@ const useForm = () => {
 
   uploadImage('#avatar', '.ad-form-header__preview > img');
   uploadImage('#images', '.ad-form__photo', true);
-
 }
+
 export default useForm;

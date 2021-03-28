@@ -1,7 +1,13 @@
-import { typeSelect, priceSelect, roomsSelect, guestsSelect, featuresFieldset } from './utils.js';
+import {mapFilterForm} from './utils.js';
 import {getFilterPrice} from './helpers.js';
 
 const anyValue = 'any';
+
+const typeSelect = mapFilterForm.querySelector('#housing-type');
+const priceSelect = mapFilterForm.querySelector('#housing-price');
+const roomsSelect = mapFilterForm.querySelector('#housing-rooms');
+const guestsSelect = mapFilterForm.querySelector('#housing-guests');
+const featuresFieldset = mapFilterForm.querySelector('#housing-features');
 
 const filtratedItem = (el, item, param) => el.value === anyValue ? true : el.value === item[param].toString();
 

@@ -1,5 +1,11 @@
-import {allFieldset, allMapFilters, mainForm, mapFeatures, mapFilterForm, pageBody} from './utils.js';
+import {mainForm, mapFilterForm, pageBody} from './utils.js';
 import {addDisabledValue, handlerClick, handlerKeyDown} from './helpers.js';
+
+
+
+const mapFeatures = document.querySelector('.map__features');
+const allMapFilters = mapFilterForm.querySelectorAll('.map__filter');
+const allFieldset = mainForm.querySelectorAll('fieldset');
 
 
 const createApiResponse = err => {
