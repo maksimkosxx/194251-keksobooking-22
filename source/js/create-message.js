@@ -1,5 +1,5 @@
 import {pageBody} from './utils.js';
-import {handlerClick, handlerKeyDown} from './helpers.js';
+import {handlerKeyDown, handlerClick} from './helpers.js';
 
 const createMessage = (selector) => {
 

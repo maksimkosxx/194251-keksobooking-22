@@ -3,6 +3,7 @@ import createApiResponse from './error.js';
 import {mainForm, mapFilterForm} from './utils.js';
 import {setAddressValue} from './helpers.js';
 import createMessage from './create-message.js';
+import {checkPriceValidity, checkRoomsValidity} from './validation.js';
 
 const URL = {
   get: 'https://22.javascript.pages.academy/keksobooking/data',
@@ -30,6 +31,9 @@ const setData = () => {
   mainForm.addEventListener('submit', (evt) => {
 
     evt.preventDefault();
+
+    checkPriceValidity();
+    checkRoomsValidity();
 
     const formData = new FormData(evt.target);
 

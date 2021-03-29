@@ -1,13 +1,11 @@
-import {priceInput, mainForm} from './utils.js';
-import { getMinPrice, getRoomsValue } from './helpers.js';
+import {priceInput, mainForm, typeFormInput, roomNumberSelect, capacitySelect} from './utils.js';
+import {getMinPrice, getRoomsValue} from './helpers.js';
+import {checkPriceValidity, checkRoomsValidity} from './validation.js';
 import uploadImage from './upload-image.js';
 
 
-const typeFormInput = mainForm.querySelector('#type');
 const timeinSelect = mainForm.querySelector('#timein');
 const timeoutSelect = mainForm.querySelector('#timeout');
-const roomNumberSelect = mainForm.querySelector('#room_number');
-const capacitySelect = mainForm.querySelector('#capacity');
 
 
 const useForm = () => {
@@ -15,6 +13,7 @@ const useForm = () => {
   typeFormInput.addEventListener('change' , (evt) => {
     const currentValue = evt.target.value;
     priceInput.placeholder = getMinPrice[currentValue].toString();
+    checkPriceValidity();
   })
 
   timeinSelect.addEventListener('change', (evt) => {
@@ -37,22 +36,10 @@ const useForm = () => {
     getRoomsValue[selectedValue].map((item) => {
       capacitySelect.querySelector('option' + '[value="' + item + '"]').disabled = false;
     })
-  })
-
-  priceInput.addEventListener('input', (evt) => {
-
-    const inputValue = evt.target.value;
-    const valueLimit = getMinPrice[typeFormInput.value];
-
-    if (inputValue < valueLimit) {
-      evt.target.setCustomValidity(`Цена должна не менее чем ${valueLimit} руб.`);
-    }
-    else {
-      evt.target.setCustomValidity('');
-    }
-
-    evt.target.reportValidity();
+    checkRoomsValidity()
   });
+
+  priceInput.addEventListener('input', () => checkPriceValidity());
 
   uploadImage('#avatar', '.ad-form-header__preview > img');
   uploadImage('#images', '.ad-form__photo', true);

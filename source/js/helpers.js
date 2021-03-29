@@ -49,19 +49,27 @@ const setAddressValue = () => {
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-const handlerKeyDown = (targetElement, item, additionalItem) => {
-  targetElement.addEventListener('keydown', (evt) => isEscEvent(evt) ? removeElement(item, additionalItem) : '');
+const handlerKeyDown = (targetElement, item) => {
+  targetElement.addEventListener('keydown', (evt) => {
+    if(isEscEvent(evt)) {
+      removeElement(item);
+    }
+  });
 }
 
 const handlerClick = (targetElement, item, additionalItem) => {
-  targetElement.addEventListener('click', () => removeElement(item, additionalItem));
+  targetElement.addEventListener('click', () => {
+    removeElement(item, additionalItem)
+  });
 }
 
 const removeElement = (item, additionalItem) => {
-  item.remove();
+
+  document.removeEventListener('keydown', removeElement);
+  document.removeEventListener('click', removeElement);
+
+  item && item.remove();
   additionalItem ? additionalItem.remove() : '';
-  document.removeEventListener('click', () => removeElement);
-  document.removeEventListener('keydown', () => removeElement);
 }
 
 export {

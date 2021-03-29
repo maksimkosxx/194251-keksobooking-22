@@ -17,14 +17,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _error_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./error.js */ "./source/js/error.js");
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils.js */ "./source/js/utils.js");
 /* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers.js */ "./source/js/helpers.js");
+/* harmony import */ var _create_message_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./create-message.js */ "./source/js/create-message.js");
+/* harmony import */ var _validation_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./validation.js */ "./source/js/validation.js");
 
 
 
 
 
+
+
+const URL = {
+  get: 'https://22.javascript.pages.academy/keksobooking/data',
+  post: 'https://22.javascript.pages.academy/keksobooking',
+}
 
 const getData = (cb) => {
-  fetch('https://22.javascript.pages.academy/keksobooking/data')
+  fetch(URL.get)
     .then((response) => {
       if(response.ok ) {
         return response.json()
@@ -45,9 +53,12 @@ const setData = () => {
 
     evt.preventDefault();
 
+    (0,_validation_js__WEBPACK_IMPORTED_MODULE_5__.checkPriceValidity)();
+    (0,_validation_js__WEBPACK_IMPORTED_MODULE_5__.checkRoomsValidity)();
+
     const formData = new FormData(evt.target);
 
-    fetch('https://22.javascript.pages.academy/keksobooking',
+    fetch(URL.post,
       {
         method: 'POST',
         body: formData,
@@ -57,12 +68,12 @@ const setData = () => {
           _utils_js__WEBPACK_IMPORTED_MODULE_2__.mainForm.reset();
           _utils_js__WEBPACK_IMPORTED_MODULE_2__.mapFilterForm.reset();
           (0,_helpers_js__WEBPACK_IMPORTED_MODULE_3__.setAddressValue)();
-          (0,_helpers_js__WEBPACK_IMPORTED_MODULE_3__.createRespondingMessage)('success');
+          (0,_create_message_js__WEBPACK_IMPORTED_MODULE_4__.default)('success');
         } else {
-          (0,_helpers_js__WEBPACK_IMPORTED_MODULE_3__.createRespondingMessage)('error');
+          throw new Error;
         }
       })
-      .catch(() => (0,_helpers_js__WEBPACK_IMPORTED_MODULE_3__.createRespondingMessage)('error'))
+      .catch(() => (0,_create_message_js__WEBPACK_IMPORTED_MODULE_4__.default)('error'))
   })
 }
 
@@ -97,6 +108,119 @@ const changeFilters = (cb) => {
 
 /***/ }),
 
+/***/ "./source/js/create-element.js":
+/*!*************************************!*\
+  !*** ./source/js/create-element.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+
+const createElement = (element, content) => {
+  if (element.textContent.length) {
+    element.textContent = content
+  } else
+    element.remove();
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createElement);
+
+
+/***/ }),
+
+/***/ "./source/js/create-features.js":
+/*!**************************************!*\
+  !*** ./source/js/create-features.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+
+const createFeaturesList = (template, array) => {
+  template.innerHTML = ''
+  if (array.length) {
+    array.map(el => {
+      const listItem = document.createElement('li');
+      listItem.classList.add('popup__feature', `popup__feature--${el}`);
+      template.appendChild(listItem);
+    });
+  } else {
+    template.remove()
+  }
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createFeaturesList);
+
+
+/***/ }),
+
+/***/ "./source/js/create-message.js":
+/*!*************************************!*\
+  !*** ./source/js/create-message.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils.js */ "./source/js/utils.js");
+/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers.js */ "./source/js/helpers.js");
+
+
+
+const createMessage = (selector) => {
+
+  const messageId = `#${selector}`;
+  const messageClass = `.${selector}`;
+  const messageBtnClass = `${messageClass}__button`;
+  const initTemplate = document.querySelector(messageId).content.cloneNode(true);
+  const newMessage = initTemplate.querySelector(messageClass);
+  const messageBtn = initTemplate.querySelector(messageBtnClass);
+  _utils_js__WEBPACK_IMPORTED_MODULE_0__.pageBody.appendChild(newMessage);
+
+  (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.handlerKeyDown)(_utils_js__WEBPACK_IMPORTED_MODULE_0__.pageBody, newMessage);
+  messageBtn ? (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.handlerClick)(messageBtn, newMessage) : (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.handlerClick)(_utils_js__WEBPACK_IMPORTED_MODULE_0__.pageBody, newMessage);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createMessage);
+
+
+/***/ }),
+
+/***/ "./source/js/create-photos.js":
+/*!************************************!*\
+  !*** ./source/js/create-photos.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const createPhotosList = (list, item, array, alt) => {
+  list.innerHTML = ''
+  if (array.length) {
+    array.map(link => {
+      const listItem = item.cloneNode(true);
+      listItem.src = link;
+      listItem.alt = alt;
+      list.appendChild(listItem);
+    })
+  } else {
+    list.remove()
+  }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createPhotosList);
+
+
+/***/ }),
+
 /***/ "./source/js/create-popup.js":
 /*!***********************************!*\
   !*** ./source/js/create-popup.js ***!
@@ -108,72 +232,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers.js */ "./source/js/helpers.js");
+/* harmony import */ var _create_element_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create-element.js */ "./source/js/create-element.js");
+/* harmony import */ var _create_features_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./create-features.js */ "./source/js/create-features.js");
+/* harmony import */ var _create_photos_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./create-photos.js */ "./source/js/create-photos.js");
+
+
+
+
+
+const initTemplate = document.querySelector('#card').content;
+const templateItem = initTemplate.querySelector('.popup');
 
 
 const createPopup = data => {
 
-  const initTemplate = document.querySelector('#card').content;
-  const templateItem = initTemplate.querySelector('.popup');
   const newItem = templateItem.cloneNode(true);
-  const TITLE = newItem.querySelector('.popup__title');
-  const ADDRESS = newItem.querySelector('.popup__text--address');
-  const PRICE = newItem.querySelector('.popup__text--price');
-  const TYPE = newItem.querySelector('.popup__type');
-  const CAPACITY = newItem.querySelector('.popup__text--capacity');
-  const TIME = newItem.querySelector('.popup__text--time');
-  const FEATURES = newItem.querySelector('.popup__features');
-  const DESCRIPTION = newItem.querySelector('.popup__description');
-  const PHOTOS = newItem.querySelector('.popup__photos');
-  const PHOTO = PHOTOS.querySelector('.popup__photo');
-  const AVATAR = newItem.querySelector('.popup__avatar');
-
-  const createElement = (element, content) => {
-    if (element.textContent.length > 0) {
-      return element.textContent = content
-    } else
-      return element.remove();
-  }
-
-  const createFeaturesList = (template, array) => {
-    template.innerHTML = ''
-    if (array.length > 0) {
-      array.map(el => {
-        const listItem = document.createElement('li');
-        listItem.classList.add('popup__feature', `popup__feature--${el}`);
-        template.appendChild(listItem);
-      });
-    } else {
-      template.remove()
-    }
-  }
-
-  const createPhotosList = (list, array, alt) => {
-    list.innerHTML = ''
-    if (array.length > 0) {
-      array.map(link => {
-        const listItem = PHOTO.cloneNode(true);
-        listItem.src = link;
-        listItem.alt = alt;
-        list.appendChild(listItem);
-      })
-    } else {
-      return list.remove()
-    }
-  }
+  const title = newItem.querySelector('.popup__title');
+  const address = newItem.querySelector('.popup__text--address');
+  const price = newItem.querySelector('.popup__text--price');
+  const type = newItem.querySelector('.popup__type');
+  const capacity = newItem.querySelector('.popup__text--capacity');
+  const time = newItem.querySelector('.popup__text--time');
+  const features = newItem.querySelector('.popup__features');
+  const description = newItem.querySelector('.popup__description');
+  const photos = newItem.querySelector('.popup__photos');
+  const photo = photos.querySelector('.popup__photo');
+  const usePhoto = newItem.querySelector('.popup__avatar');
 
   const {offer} = data;
   const {avatar} = data.author;
 
-  createElement(TITLE, offer.title);
-  createElement(ADDRESS, offer.address);
-  createElement(PRICE, `${offer.price} ₽/ночь`);
-  createElement(TYPE, (0,_helpers_js__WEBPACK_IMPORTED_MODULE_0__.getType)(offer.type));
-  createElement(CAPACITY, `${offer.rooms} комнаты для ${offer.guests} гостей`);
-  createElement(TIME, `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`);
-  createFeaturesList(FEATURES, offer.features);
-  createElement(DESCRIPTION, offer.description);
-  createPhotosList(PHOTOS, offer.photos, offer.title);
-  AVATAR.src = avatar;
+  (0,_create_element_js__WEBPACK_IMPORTED_MODULE_1__.default)(title, offer.title);
+  (0,_create_element_js__WEBPACK_IMPORTED_MODULE_1__.default)(address, offer.address);
+  (0,_create_element_js__WEBPACK_IMPORTED_MODULE_1__.default)(price, `${offer.price} ₽/ночь`);
+  (0,_create_element_js__WEBPACK_IMPORTED_MODULE_1__.default)(type, _helpers_js__WEBPACK_IMPORTED_MODULE_0__.getType[offer.type]);
+  (0,_create_element_js__WEBPACK_IMPORTED_MODULE_1__.default)(capacity, `${offer.rooms} комнаты для ${offer.guests} гостей`);
+  (0,_create_element_js__WEBPACK_IMPORTED_MODULE_1__.default)(time, `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`);
+  (0,_create_features_js__WEBPACK_IMPORTED_MODULE_2__.default)(features, offer.features);
+  (0,_create_element_js__WEBPACK_IMPORTED_MODULE_1__.default)(description, offer.description);
+  (0,_create_photos_js__WEBPACK_IMPORTED_MODULE_3__.default)(photos, photo, offer.photos, offer.title);
+  usePhoto.src = avatar;
 
   return newItem;
 }
@@ -198,11 +296,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 const mapFeatures = document.querySelector('.map__features');
 const allMapFilters = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFilterForm.querySelectorAll('.map__filter');
 const allFieldset = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelectorAll('fieldset');
 
-const errorResponse = err => {
+
+const createApiResponse = err => {
 
   _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.classList.add('ad-form--disabled');
   (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.addDisabledValue)(allFieldset, true);
@@ -223,28 +324,7 @@ const errorResponse = err => {
   title.textContent = err;
   const description =  document.createElement('p');
   description.classList.add('message__description');
-  description.textContent = 'Данные не загружены, перезагрузите страницу или попробуйте позднее'
-
-  layout.addEventListener('click', () => {
-    layout.remove();
-    popup.remove();
-  });
-  close.addEventListener('click', () => {
-    popup.remove();
-
-    setTimeout(() => {
-      layout.remove();
-    }, 250)
-  });
-  popup && _utils_js__WEBPACK_IMPORTED_MODULE_0__.pageBody.addEventListener('keydown', (evt) => {
-    if(evt.key === 'Escape' || evt.key === 'Esc') {
-      popup.remove();
-
-      setTimeout(() => {
-        layout.remove();
-      }, 250)
-    }
-  });
+  description.textContent = 'Данные не загружены, перезагрузите страницу или попробуйте позднее';
 
   popup.appendChild(close);
   popup.appendChild(title);
@@ -253,8 +333,12 @@ const errorResponse = err => {
   _utils_js__WEBPACK_IMPORTED_MODULE_0__.pageBody.appendChild(layout);
   _utils_js__WEBPACK_IMPORTED_MODULE_0__.pageBody.appendChild(popup);
 
+  (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.handlerKeyDown)(_utils_js__WEBPACK_IMPORTED_MODULE_0__.pageBody, popup, layout);
+  (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.handlerClick)(layout, popup, layout);
+  (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.handlerClick)(close, popup, layout);
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (errorResponse);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createApiResponse);
 
 
 /***/ }),
@@ -274,6 +358,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const anyValue = 'any';
 
 const typeSelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFilterForm.querySelector('#housing-type');
 const priceSelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFilterForm.querySelector('#housing-price');
@@ -281,41 +366,40 @@ const roomsSelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFilterForm.querySe
 const guestsSelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFilterForm.querySelector('#housing-guests');
 const featuresFieldset = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mapFilterForm.querySelector('#housing-features');
 
+const filtratedItem = (el, item, param) => el.value === anyValue ? true : el.value === item[param].toString();
+
+const filtratedType = item => filtratedItem(typeSelect, item.offer, 'type');
+
+const filtratedPrice = (item) => {
+  const filteringPrice = _helpers_js__WEBPACK_IMPORTED_MODULE_1__.getFilterPrice[priceSelect.value];
+  return filteringPrice ? item.offer.price >= filteringPrice.min && item.offer.price <= filteringPrice.max : true;
+};
+
+const filtratedRooms = item => filtratedItem(roomsSelect, item.offer, 'rooms');
+
+const filtratedGuests = item => filtratedItem(guestsSelect, item.offer, 'guests');
+
+const filtratedFeatures = (item) => {
+
+  const checkedFeaturesItems = featuresFieldset.querySelectorAll('input:checked');
+
+  const featuresArr = [...checkedFeaturesItems];
+
+  return featuresArr.every(element =>  item.offer.features.includes(element.value));
+};
 
 
-const Filters = (data) => {
-
-  const filtrationItem = (el, item, param) => el.value === 'any' ? true : el.value === item[param].toString();
-
-  const filtrationType = (item) => filtrationItem(typeSelect, item.offer, 'type');
-
-  const filtrationPrice = (item) => {
-    const filteringPrice = (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.getPrice)(priceSelect.value);
-    return filteringPrice ? item.offer.price >= filteringPrice.min && item.offer.price <= filteringPrice.max : true;
-  };
-
-  const filtrationRooms = (item) => filtrationItem(roomsSelect, item.offer, 'rooms');
-
-  const filtrationGuests = (item) => filtrationItem(guestsSelect, item.offer, 'guests');
-
-  const filtrationFeatures = (item) => {
-
-    const checkedFeaturesItems = featuresFieldset.querySelectorAll('input:checked');
-
-    const featuresArr = [...checkedFeaturesItems];
-
-    return featuresArr.every(element => item.offer.features.includes(element.value));
-  };
+const filtratedData = (data) => {
 
   return data
-    .filter(filtrationType)
-    .filter(filtrationPrice)
-    .filter(filtrationRooms)
-    .filter(filtrationGuests)
-    .filter(filtrationFeatures);
+    .filter(filtratedType)
+    .filter(filtratedPrice)
+    .filter(filtratedRooms)
+    .filter(filtratedGuests)
+    .filter(filtratedFeatures);
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Filters);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (filtratedData);
 
 
 /***/ }),
@@ -330,102 +414,90 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "addDisabledValue": () => (/* binding */ addDisabledValue),
 /* harmony export */   "setAddressValue": () => (/* binding */ setAddressValue),
-/* harmony export */   "createRespondingMessage": () => (/* binding */ createRespondingMessage),
+/* harmony export */   "isEscEvent": () => (/* binding */ isEscEvent),
+/* harmony export */   "handlerClick": () => (/* binding */ handlerClick),
+/* harmony export */   "handlerKeyDown": () => (/* binding */ handlerKeyDown),
+/* harmony export */   "removeElement": () => (/* binding */ removeElement),
 /* harmony export */   "getType": () => (/* binding */ getType),
 /* harmony export */   "getMinPrice": () => (/* binding */ getMinPrice),
 /* harmony export */   "getRoomsValue": () => (/* binding */ getRoomsValue),
-/* harmony export */   "getPrice": () => (/* binding */ getPrice)
+/* harmony export */   "getFilterPrice": () => (/* binding */ getFilterPrice)
 /* harmony export */ });
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils.js */ "./source/js/utils.js");
 
 
-
-const getType = (type) => {
-  switch (type) {
-    case 'flat':
-      return 'Квартира';
-    case 'bungalow':
-      return 'Бунгало';
-    case 'house':
-      return 'Дом';
-    case 'palace':
-      return 'Дворец';
-  }
+const getType = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
 }
 
-const getMinPrice = (type) => {
-  switch (type) {
-    case 'flat':
-      return 1000;
-    case 'bungalow':
-      return 0;
-    case 'house':
-      return 5000;
-    case 'palace':
-      return 10000;
-  }
+const getMinPrice = {
+  flat: 1000,
+  bungalow: 0,
+  house: 5000,
+  palace: 10000,
 }
 
-const getRoomsValue = (value) => {
-  switch (value) {
-    case '1':
-      return ['1'];
-    case '2':
-      return ['1', '2'];
-    case '3':
-      return ['1', '2', '3'];
-    case '100':
-      return ['0'];
-  }
+const getRoomsValue = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0],
 }
 
-const getPrice = (price) => {
-  switch (price) {
-    case 'low':
-      return {min: 0, max: 10000};
-    case 'middle':
-      return {min: 10000, max: 50000};
-    case 'high':
-      return {min: 50000, max: Infinity};
-  }
+const getFilterPrice = {
+  'low': {
+    min: 0,
+    max: 10000,
+  },
+  'middle': {
+    min: 10000,
+    max: 50000,
+  },
+  'high': {
+    min: 50000,
+    max: Infinity,
+  },
 }
+
 
 const addDisabledValue = (array, value) => {
-  for (let i = 0; i < array.length; i++) {
-    array[i].disabled = value;
+  for (let item of array) {
+    item.disabled = value;
   }
 }
 
 const setAddressValue = () => {
-  setTimeout(()=> {
-    _utils_js__WEBPACK_IMPORTED_MODULE_0__.fieldAddress.value = `${_utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lat}, ${_utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lng}`;
-  }, 200)
+  _utils_js__WEBPACK_IMPORTED_MODULE_0__.fieldAddress.value = `${_utils_js__WEBPACK_IMPORTED_MODULE_0__.INIT_COORDS.lat}, ${_utils_js__WEBPACK_IMPORTED_MODULE_0__.INIT_COORDS.lng}`;
 };
 
-const createRespondingMessage = (selector) => {
-  const messageId = `#${selector}`;
-  const messageClass = `.${selector}`;
-  const messageBtnClass = `${messageClass}__button`;
-  const initTemplate = document.querySelector(messageId).content.cloneNode(true);
-  const newMessage = initTemplate.querySelector(messageClass);
-  const messageBtn = initTemplate.querySelector(messageBtnClass);
-  _utils_js__WEBPACK_IMPORTED_MODULE_0__.pageBody.appendChild(newMessage);
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-  _utils_js__WEBPACK_IMPORTED_MODULE_0__.pageBody.addEventListener('keydown', (evt) => {
-    if(evt.key === 'Escape' || evt.key === 'Esc') {
-      newMessage.remove();
+const handlerKeyDown = (targetElement, item) => {
+  targetElement.addEventListener('keydown', (evt) => {
+    if(isEscEvent(evt)) {
+      removeElement(item);
     }
   });
-  if(messageBtn) {
-    messageBtn.addEventListener('click', () => {
-      newMessage.remove();
-    });
-  } else {
-    _utils_js__WEBPACK_IMPORTED_MODULE_0__.pageBody.addEventListener('click', () => {
-      newMessage.remove();
-    });
-  }
 }
+
+const handlerClick = (targetElement, item, additionalItem) => {
+  targetElement.addEventListener('click', () => {
+    removeElement(item, additionalItem)
+  });
+}
+
+const removeElement = (item, additionalItem) => {
+
+  document.removeEventListener('keydown', removeElement);
+  document.removeEventListener('click', removeElement);
+
+  item && item.remove();
+  additionalItem ? additionalItem.remove() : '';
+}
+
 
 
 
@@ -452,20 +524,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const POINTS_LIMIT = 10;
+
+const btnReset = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('.ad-form__reset');
+const avatar = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('.ad-form-header__preview > img');
+const photo = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('.ad-form__photo');
 
 const initMap = L.map('map-canvas');
-
-initMap.setView({
-  lat: _utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lat,
-  lng: _utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lng,
-}, 9);
-
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(initMap);
 
 const mainPinIcon = L.icon({
   iconUrl: '../img/main-pin.svg',
@@ -475,30 +540,41 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: _utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lat,
-    lng: _utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lng,
+    lat: _utils_js__WEBPACK_IMPORTED_MODULE_0__.INIT_COORDS.lat,
+    lng: _utils_js__WEBPACK_IMPORTED_MODULE_0__.INIT_COORDS.lng,
   },
   {
     draggable: true,
     icon: mainPinIcon,
   },
 );
+
 const mapPoints = L.layerGroup().addTo(initMap);
+
+initMap.setView({
+  lat: _utils_js__WEBPACK_IMPORTED_MODULE_0__.INIT_COORDS.lat,
+  lng: _utils_js__WEBPACK_IMPORTED_MODULE_0__.INIT_COORDS.lng,
+}, 9);
+
+L.tileLayer(
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  },
+).addTo(initMap);
 
 mainPinMarker.addTo(initMap);
 
 _utils_js__WEBPACK_IMPORTED_MODULE_0__.fieldAddress.readOnly = true;
-_utils_js__WEBPACK_IMPORTED_MODULE_0__.fieldAddress.value = `${_utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lat}, ${_utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords.lng}`;
+_utils_js__WEBPACK_IMPORTED_MODULE_0__.fieldAddress.value = `${_utils_js__WEBPACK_IMPORTED_MODULE_0__.INIT_COORDS.lat}, ${_utils_js__WEBPACK_IMPORTED_MODULE_0__.INIT_COORDS.lng}`;
 
-mainPinMarker.on('moveend', (evt) => {
+mainPinMarker.addEventListener('mousemove', (evt) => {
   const coords = evt.target.getLatLng();
   _utils_js__WEBPACK_IMPORTED_MODULE_0__.fieldAddress.value = `${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`;
 });
 
 
 const renderMarkers = (data) => {
-
-  const POINTS_LIMIT = 10;
 
   mapPoints.clearLayers();
 
@@ -511,7 +587,7 @@ const renderMarkers = (data) => {
     const popup = (0,_create_popup_js__WEBPACK_IMPORTED_MODULE_1__.default)(item);
 
     const icon = L.icon({
-      iconUrl: 'img/pin.svg',
+      iconUrl: '../img/pin.svg',
       iconSize: [40, 40],
       iconAnchor: [20, 40],
     });
@@ -528,10 +604,6 @@ const renderMarkers = (data) => {
   });
 }
 
-const btnReset = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('.ad-form__reset');
-const avatar = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('.ad-form-header__preview > img');
-const photo = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('.ad-form__photo');
-
 btnReset.addEventListener('click', ()=> {
   _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.reset();
   _utils_js__WEBPACK_IMPORTED_MODULE_0__.priceInput.placeholder = '1000';
@@ -540,7 +612,7 @@ btnReset.addEventListener('click', ()=> {
   photo.style.backgroundImage = '';
   mapPoints.clearLayers();
   (0,_helpers_js__WEBPACK_IMPORTED_MODULE_3__.setAddressValue)();
-  mainPinMarker.setLatLng(_utils_js__WEBPACK_IMPORTED_MODULE_0__.initCoords);
+  mainPinMarker.setLatLng(_utils_js__WEBPACK_IMPORTED_MODULE_0__.INIT_COORDS);
 })
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (renderMarkers);
@@ -612,24 +684,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils.js */ "./source/js/utils.js");
 /* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers.js */ "./source/js/helpers.js");
-/* harmony import */ var _upload_image_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./upload-image.js */ "./source/js/upload-image.js");
+/* harmony import */ var _validation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./validation.js */ "./source/js/validation.js");
+/* harmony import */ var _upload_image_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./upload-image.js */ "./source/js/upload-image.js");
 
 
 
 
 
-const typeFormInput = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('#type');
+
 const timeinSelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('#timein');
 const timeoutSelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('#timeout');
-const roomNumberSelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('#room_number');
-const capacitySelect = _utils_js__WEBPACK_IMPORTED_MODULE_0__.mainForm.querySelector('#capacity');
 
 
 const useForm = () => {
 
-  typeFormInput.addEventListener('change' , (evt) => {
+  _utils_js__WEBPACK_IMPORTED_MODULE_0__.typeFormInput.addEventListener('change' , (evt) => {
     const currentValue = evt.target.value;
-    _utils_js__WEBPACK_IMPORTED_MODULE_0__.priceInput.placeholder = (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.getMinPrice)(currentValue).toString();
+    _utils_js__WEBPACK_IMPORTED_MODULE_0__.priceInput.placeholder = _helpers_js__WEBPACK_IMPORTED_MODULE_1__.getMinPrice[currentValue].toString();
+    (0,_validation_js__WEBPACK_IMPORTED_MODULE_2__.checkPriceValidity)();
   })
 
   timeinSelect.addEventListener('change', (evt) => {
@@ -640,41 +712,27 @@ const useForm = () => {
   })
 
 
-  const allCapacityOptions = capacitySelect.children;
+  const allCapacityOptions = _utils_js__WEBPACK_IMPORTED_MODULE_0__.capacitySelect.children;
   const options = [...allCapacityOptions];
   options.map(option => option.value !== '1' ? option.disabled = true : option.disabled = false);
 
-  roomNumberSelect.addEventListener('change', (evt) => {
+  _utils_js__WEBPACK_IMPORTED_MODULE_0__.roomNumberSelect.addEventListener('change', (evt) => {
 
     const selectedValue = evt.target.value;
     options.map(option => option.disabled = true);
 
-    (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.getRoomsValue)(selectedValue).map((item) => {
-      capacitySelect.querySelector('option' + '[value="' + item + '"]').disabled = false;
+    _helpers_js__WEBPACK_IMPORTED_MODULE_1__.getRoomsValue[selectedValue].map((item) => {
+      _utils_js__WEBPACK_IMPORTED_MODULE_0__.capacitySelect.querySelector('option' + '[value="' + item + '"]').disabled = false;
     })
-  })
-
-  _utils_js__WEBPACK_IMPORTED_MODULE_0__.priceInput.addEventListener('input', (evt) => {
-
-    const inputValue = evt.target.value;
-    const priceLimit = (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.getMinPrice)(typeFormInput.value);
-
-    if (inputValue < priceLimit) {
-      evt.target.setCustomValidity(`Цена должна не менее чем ${priceLimit} руб.`);
-    }
-    else {
-      evt.target.setCustomValidity('');
-    }
-
-    evt.target.reportValidity();
+    ;(0,_validation_js__WEBPACK_IMPORTED_MODULE_2__.checkRoomsValidity)()
   });
 
-  (0,_upload_image_js__WEBPACK_IMPORTED_MODULE_2__.default)('#avatar', '.ad-form-header__preview > img');
-  (0,_upload_image_js__WEBPACK_IMPORTED_MODULE_2__.default)('#images', '.ad-form__photo', true);
+  _utils_js__WEBPACK_IMPORTED_MODULE_0__.priceInput.addEventListener('input', () => (0,_validation_js__WEBPACK_IMPORTED_MODULE_2__.checkPriceValidity)());
 
-
-
+  (0,_upload_image_js__WEBPACK_IMPORTED_MODULE_3__.default)('#avatar', '.ad-form-header__preview > img');
+  (0,_upload_image_js__WEBPACK_IMPORTED_MODULE_3__.default)('#images', '.ad-form__photo', true);
 }
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useForm);
 
 
@@ -688,26 +746,73 @@ const useForm = () => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "INIT_COORDS": () => (/* binding */ INIT_COORDS),
 /* harmony export */   "pageBody": () => (/* binding */ pageBody),
-/* harmony export */   "initCoords": () => (/* binding */ initCoords),
 /* harmony export */   "mainForm": () => (/* binding */ mainForm),
 /* harmony export */   "mapFilterForm": () => (/* binding */ mapFilterForm),
 /* harmony export */   "fieldAddress": () => (/* binding */ fieldAddress),
-/* harmony export */   "priceInput": () => (/* binding */ priceInput)
+/* harmony export */   "priceInput": () => (/* binding */ priceInput),
+/* harmony export */   "typeFormInput": () => (/* binding */ typeFormInput),
+/* harmony export */   "roomNumberSelect": () => (/* binding */ roomNumberSelect),
+/* harmony export */   "capacitySelect": () => (/* binding */ capacitySelect)
 /* harmony export */ });
-const pageBody = document.querySelector('body');
-
-const initCoords = {
+const INIT_COORDS = {
   lat: 35.68697,
   lng: 139.75394,
 }
+
+const pageBody = document.querySelector('body');
 
 const mainForm = document.querySelector('.ad-form');
 const mapFilterForm = document.querySelector('.map__filters');
 const fieldAddress = mainForm.querySelector('#address');
 const priceInput = mainForm.querySelector('#price');
+const typeFormInput = mainForm.querySelector('#type');
+const roomNumberSelect = mainForm.querySelector('#room_number');
+const capacitySelect = mainForm.querySelector('#capacity');
 
 
+
+
+
+
+/***/ }),
+
+/***/ "./source/js/validation.js":
+/*!*********************************!*\
+  !*** ./source/js/validation.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "checkPriceValidity": () => (/* binding */ checkPriceValidity),
+/* harmony export */   "checkRoomsValidity": () => (/* binding */ checkRoomsValidity)
+/* harmony export */ });
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils.js */ "./source/js/utils.js");
+/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers.js */ "./source/js/helpers.js");
+
+
+
+
+const checkPriceValidity = () => {
+  const inputValue = _utils_js__WEBPACK_IMPORTED_MODULE_0__.priceInput.value;
+  const valueLimit = _helpers_js__WEBPACK_IMPORTED_MODULE_1__.getMinPrice[_utils_js__WEBPACK_IMPORTED_MODULE_0__.typeFormInput.value];
+
+  if (inputValue < valueLimit) {
+    _utils_js__WEBPACK_IMPORTED_MODULE_0__.priceInput.setCustomValidity(`Цена должна не менее чем ${valueLimit} руб.`);
+  }
+  else {
+    _utils_js__WEBPACK_IMPORTED_MODULE_0__.priceInput.setCustomValidity('');
+  }
+  _utils_js__WEBPACK_IMPORTED_MODULE_0__.priceInput.reportValidity();
+};
+
+const checkRoomsValidity = () => {
+  const roomGuests = _helpers_js__WEBPACK_IMPORTED_MODULE_1__.getRoomsValue[_utils_js__WEBPACK_IMPORTED_MODULE_0__.roomNumberSelect.value];
+  const message = roomGuests.indexOf(+_utils_js__WEBPACK_IMPORTED_MODULE_0__.capacitySelect.value) === -1 ? 'Некорректное значение, выберите правильное' : '';
+  _utils_js__WEBPACK_IMPORTED_MODULE_0__.capacitySelect.setCustomValidity(message);
+};
 
 
 
